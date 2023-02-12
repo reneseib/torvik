@@ -1,0 +1,141 @@
+.dropDown {
+    position: relative;
+    width: 100%;
+    min-width: 250px;
+
+    & .caret {
+        // position: absolute;
+        // right: 8px;
+        // top:auto;
+        // content: "";
+        // background: url("data:image/svg+xml;utf8,")
+        display: inline-block;
+        width: 0;
+        height: 0;
+        margin-left: 2px;
+        vertical-align: middle;
+        border-top: 4px dashed;
+        border-right: 4px solid transparent;
+        border-left: 4px solid transparent;
+    }
+
+    & .button {
+        width: 100%;
+        min-width: 250px;
+        background: #f9fbfa;
+        border-radius: 6px;
+        border: 1px solid #889397;
+        color: #1c2d38;
+        display: inline-block;
+        font-size: 13px;
+        font-weight: 500;
+        height: 36px;
+        line-height: 34px;
+        padding: 0 12px;
+        transition: all 120ms ease;
+        text-decoration: none;
+
+        &:focus {
+            border-color: #c1c7c6;
+            box-shadow: 0 0 0 2px #fff, 0 0 0 4px #0498ec;
+            outline: 0;
+        }
+
+        & .buttonIsXs {
+            height: 22px;
+            font-size: 12px;
+            line-height: 20px;
+            text-transform: uppercase;
+            font-weight: 700;
+            padding: 0 8px;
+        }
+
+        & .dropDownText {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+
+    & .dropDownMenu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1000;
+        display: none;
+        float: left;
+        min-width: 160px;
+        width: 100%;
+        padding: 5px 0;
+        margin: 2px 0 0;
+        font-size: 14px;
+        text-align: left;
+        list-style: none;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ccc;
+        border: 1px solid rgba(0, 0, 0, .15);
+        border-radius: 4px;
+        box-shadow: 0 6px 12px rgb(0 0 0 / 18%);
+
+        &.isOpen {
+            display: block;
+        }
+
+        & .dropDownHeader {
+            display: block;
+            padding: 3px 10px;
+            font-size: 12px;
+            line-height: 1.42857143;
+            color: #777;
+            white-space: nowrap;
+            text-transform: uppercase;
+        }
+
+        & li {
+            position: relative;
+            display: block;
+            padding: 3px 0px;
+            clear: both;
+            font-weight: 400;
+            line-height: 1.42857143;
+            color: #333;
+            white-space: nowrap;
+            height: 2em;
+            cursor: pointer;
+
+            &:hover:not(.dropDownHeader) {
+                color: #303434;
+                text-decoration: none;
+                background: #e6e6e6;
+            }
+        }
+
+        & .itemContainer {
+            position: absolute;
+            top: 0;
+            padding: 3px 10px 3px 32px;
+
+            // &:has(svg) {
+            //     padding: 3px 10px 3px 16px;
+            // }
+
+            & svg {
+                position: absolute;
+                left: 10px;
+            }
+
+            & a {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
+
+        }
+
+
+    }
+
+
+}

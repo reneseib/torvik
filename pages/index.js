@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Head from 'next/head'
 import styles from '../styles/Home.module.scss'
 
+import DropDown from '../components/DropDown';
+import CheckBox from '../components/CheckBox';
+
 export default function Home() {
 
   const [selectValue, setSelectValue] = useState("")
@@ -12,29 +15,33 @@ export default function Home() {
 
 
   const handleFormChange = (e) => {
-    let name = e.target.name;
-    let type = e.target.type;
+    e.preventDefault();
 
-
+    let name = e.currentTarget.name;
+    let type = e.currentTarget.type;
 
     var value = null;
 
     if (type === 'text') {
-      if (formValues?.wasteReduction === true) {
-        value = e.target.value;
+      if (formValues?.wasteReduction === true && formValues) {
+        value = e.currentTarget.value;
       } else {
         value = "";
       }
     }
 
+    if (type === 'submit') {
+      value = e.currentTarget.value;
+    }
+
     if (type === 'select-one') {
-      value = e.target.value;
+      value = e.currentTarget.value;
       formValues.sector = value;
     }
 
     if (type === 'checkbox') {
-      value = e.target.checked;
-      if (value === false && formValues?.wasteReductionInput !== "") {
+      value = e.currentTarget.checked;
+      if (name === 'wasteReduction' && value === false && formValues?.wasteReductionInput !== "") {
         formValues.wasteReductionInput = "";
       }
     }
@@ -68,8 +75,10 @@ export default function Home() {
     }
   }
 
-  useEffect(() => {
 
+
+  useEffect(() => {
+    console.log(formValues)
   }, [formValues, selectValue, result]);
 
   return (
@@ -83,57 +92,73 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.container}>
           <form className={styles.form}>
-            <div className={styles.dropDownWrapper}>
-              <label htmlFor="sector">Nutzungsart der Mietfläche:</label>
-              <br />
-              <select name="sector" onChange={handleFormChange} value={formValues?.sector || "gastro"}>
-                <option value="gastro">Gastronomie</option>
-                <option value="office" disabled>Büro</option>
-                <option value="logistics" disabled>Lager & Logistik</option>
-                <option value="pharmacy" disabled>Apotheke</option>
-                <option value="office" disabled>Büro</option>
-              </select>
+            <DropDown stateControl={[selectValue, setSelectValue]} />
+
+            <div className={styles.formContent}>
+              <h2>{selectValue.text}</h2>
+              <div className={styles.checkBoxWrapper}>
+                <div className={styles.checkBoxContainer}>
+                  <div style={{ marginTop: "2em", display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
+
+                    <CheckBox
+                      name="wasteReduction"
+                      value="wasteReduction"
+                      state={formValues}
+                      stateSetter={handleFormChange}
+                    />
+                    <div style={{ padding: "0 0 0 1em" }}>
+                      <h4>Müllvermeidung</h4>
+                      <p>Wenn der Mieter im Programm "Food Sharing" teilnehmen kann.</p>
+                    </div>
+                    {/* <div className={`${styles.additionalInput} ${formValues.wasteReduction ? (styles.isActive) : ("")}`}>
+                      <input
+                        type="text"
+                        name="wasteReductionInput"
+                        placeholder="X"
+                        style={{
+                          marginRight: "1em",
+                        }}
+                        value={formValues?.wasteReductionInput}
+                        disabled={formValues?.wasteReduction ? (false) : (true)}
+                        onChange={handleFormChange}
+                      /> kg/Tag
+                    </div> */}
+
+
+                  </div>
+
+                </div>
+                <div style={{ marginTop: "2em", display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
+                  <CheckBox
+                    name="foodSharing"
+                    value="foodSharing"
+                    state={formValues}
+                    stateSetter={handleFormChange}
+                  />
+                  <div style={{ padding: "0 0 0 1em" }}>
+                    <h4>Food Sharing</h4>
+                    <p>Wenn der Mieter im Programm "Food Sharing" teilnehmen kann.</p>
+                  </div>
+                </div>
+                <div style={{ marginTop: "2em", display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
+                  <CheckBox
+                    name="tooGoodToGo"
+                    value="tooGoodToGo"
+                    state={formValues} stateSetter={handleFormChange} />
+                  <div style={{ padding: "0 0 0 1em" }}>
+                    <h4>Too good to go</h4>
+                    <p>Wenn der Mieter im Programm "Too good to go" teilnehmen kann.</p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className={styles.checkBoxWrapper}>
-              <div>
-                <input
-                  type="checkbox"
-                  name="wasteReduction"
-                  value="wasteReduction"
-                  onChange={handleFormChange}
-                />
-                <label htmlFor="waste-reduction">Vermeidung von Essensabfällen:
-                  <input
-                    type="text"
-                    name="wasteReductionInput"
-                    placeholder="X"
-                    style={{ border: "none", borderBottom: `${formValues?.wasteReduction && formValues?.wasteReductionInput === "" ? ("2px solid red") : ("2px solid transparent")}` }}
-                    value={formValues?.wasteReductionInput}
-                    disabled={formValues?.wasteReduction ? (false) : (true)}
-                    onChange={handleFormChange}
-                  /> kg/Tag
-                </label>
-              </div>
-              <div>
-                <input
-                  type="checkbox"
-                  name="foodSharing"
-                  value="foodSharing"
-                  onChange={handleFormChange}
-                />
-                <label htmlFor="foodSharing">Nimmt an Food Sharing teil</label>
-              </div>
-              <div>
-                <input
-                  type="checkbox"
-                  name="tooGoodToGo"
-                  value="tooGoodToGo"
-                  onChange={handleFormChange}
-                />
-                <label htmlFor="tooGoodToGo">Nimmt an "Too good to go" teil</label>
-              </div>
+            <div style={{ marginTop: "2em" }}>
+              <button className={"btn"} onClick={handleSubmit} action="">
+                <div className={"btnContent"}>
+                  CO2 Einsparung kalkulieren
+                </div>
+              </button>
             </div>
-            <div className={"btn mt-2"} onClick={handleSubmit} action="">CO2 Einsparung kalkulieren</div>
           </form>
           {
             result !== null ? (

@@ -1,0 +1,81 @@
+.checkBoxWrapper {
+    color: #5c6c75;
+
+    &.isActive {
+        color: #00a35c;
+        font-weight: 500;
+    }
+
+    & .checkBoxBtn {
+        background-color: rgb(136, 147, 151);
+        border-color: rgb(136, 147, 151);
+        transition: all 150ms ease-in-out 0s, background-color 0s linear 0s;
+        display: inline-block;
+        flex-shrink: 0;
+        position: relative;
+        padding: 0px;
+        border-radius: 50px;
+        border: 1px solid;
+        cursor: pointer;
+        height: 32px;
+        width: 56px;
+
+        &:before {
+            background-color: rgb(1, 107, 248);
+        }
+
+        &:hover:not(:disabled) {
+            box-shadow: rgb(232 237 235) 0px 0px 0px 3px;
+        }
+
+        &[aria-checked="false"] {
+            background-color: rgb(136, 147, 151);
+            border-color: rgb(136, 147, 151);
+            transition-delay: 150ms;
+        }
+
+        &[aria-checked="true"] {
+            background-color: rgb(1, 107, 248);
+            border-color: rgb(1, 107, 248);
+            transition-delay: 150ms;
+
+            &:before {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            &>.btnContent {
+                transform: translate3d(24px, 0px, 0px);
+            }
+
+            & .checkIcon {
+                color: rgb(1, 107, 248);
+            }
+        }
+
+        & .btnContent {
+            transition: all 150ms ease-in-out 0s;
+            border-radius: 100%;
+            position: absolute;
+            top: 0px;
+            bottom: 0px;
+            margin: auto;
+            overflow: hidden;
+            transform: translate3d(0px, 0px, 0px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 28px;
+            width: 28px;
+            left: 1px;
+            background-color: rgb(255, 255, 255);
+
+            & .checkIcon {
+                flex-shrink: 0;
+                display: flex;
+                transition: color 150ms ease-in-out 0s;
+            }
+
+        }
+    }
+}

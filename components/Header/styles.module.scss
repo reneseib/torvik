@@ -1,18 +1,30 @@
 .headerWrapper {
     position: relative;
     width: 100%;
-    background: white;
+    background: #fff;
     height: 90px;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: #03403A;
+    border-bottom: 1px solid rgba(#03403A, 0.1);
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.05);
 
     & .headerContainer {
         width: 66.67%;
         height: auto;
 
         & .headerLogo {
-            color: black;
+            color: #03403A;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .headerWrapper {
+        .headerContainer {
+            width: 100%;
+            padding: 0 2em;
         }
     }
 }
