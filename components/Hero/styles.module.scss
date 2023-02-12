@@ -6,19 +6,20 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding: 0 calc((100% - 66.67%) / 2);
+    padding: 0 calc((100% - 60%) / 2);
     border-bottom: 1px solid rgba(#03403A, 0.1);
 
     & .heroImage {
-        width: 100%;
+        width: 50%;
         order: 2;
 
         & img {
-            width: 100%;
+            width: 130%;
         }
     }
 
     & .heroContainer {
+        margin-left: -5em;
         display: flex;
         order: 1;
         width: 50%;
@@ -63,12 +64,17 @@
         & .heroImage {
             width: 100%;
             order: 1;
+
+            & img {
+                width: 100%;
+            }
         }
 
         .heroContainer {
             width: 100%;
             order: 2;
             padding: 0 2em;
+            margin-left: 0;
         }
     }
 
