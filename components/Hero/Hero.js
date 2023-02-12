@@ -17,7 +17,7 @@ const Hero = () => {
                 </Button>
             </div>
             <div className={styles.heroImage}>
-                <img src="/assets/img/hero.svg" height="600" width="600" />
+                <img src="/assets/img/hero.svg" height="600" width="400" />
             </div>
 
 

@@ -10,17 +10,21 @@
     border-bottom: 1px solid rgba(#03403A, 0.1);
 
     & .heroImage {
-        display: flex;
-        width: 50%;
+        width: 100%;
+        order: 2;
+
+        & img {
+            width: 100%;
+        }
     }
 
     & .heroContainer {
         display: flex;
+        order: 1;
         width: 50%;
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
-        width: 66.67%;
         height: 100%;
 
         & .heroCaption {
@@ -47,5 +51,25 @@
         }
     }
 
+
+}
+
+@media screen and (max-width: 768px) {
+    .heroWrapper {
+        flex-direction: column;
+        height: 100%;
+        padding: 0;
+
+        & .heroImage {
+            width: 100%;
+            order: 1;
+        }
+
+        .heroContainer {
+            width: 100%;
+            order: 2;
+            padding: 0 2em;
+        }
+    }
 
 }
