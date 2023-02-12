@@ -9,43 +9,16 @@ export default function Home() {
 
   const [selectValue, setSelectValue] = useState("")
   const [formValues, setFormValues] = useState(
-    { wasteReduction: false, foodSharing: true, tooGoodToGo: true, wasteReductionInput: '', sector: 'gastro' }
+    { wasteReduction: false, foodSharing: false, tooGoodToGo: false, wasteReductionInput: '', sector: 'gastro' }
   );
   const [result, setResult] = useState(null)
 
 
-  const handleFormChange = (e) => {
-    e.preventDefault();
-
-    let name = e.currentTarget.name;
-    let type = e.currentTarget.type;
-
-    var value = null;
-
-    if (type === 'text') {
-      if (formValues?.wasteReduction === true && formValues) {
-        value = e.currentTarget.value;
-      } else {
-        value = "";
-      }
+  const handleFormChange = (name, val) => {
+    var value = val
+    if (typeof value === 'object') {
+      value = value?.target?.value;
     }
-
-    if (type === 'submit') {
-      value = e.currentTarget.value;
-    }
-
-    if (type === 'select-one') {
-      value = e.currentTarget.value;
-      formValues.sector = value;
-    }
-
-    if (type === 'checkbox') {
-      value = e.currentTarget.checked;
-      if (name === 'wasteReduction' && value === false && formValues?.wasteReductionInput !== "") {
-        formValues.wasteReductionInput = "";
-      }
-    }
-
     setFormValues({
       ...formValues,
       [name]: value
@@ -110,7 +83,7 @@ export default function Home() {
                       <h4>Müllvermeidung</h4>
                       <p>Wenn der Mieter im Programm "Food Sharing" teilnehmen kann.</p>
                     </div>
-                    {/* <div className={`${styles.additionalInput} ${formValues.wasteReduction ? (styles.isActive) : ("")}`}>
+                    <div className={`${styles.additionalInput} ${formValues.wasteReduction ? (styles.isActive) : ("")}`}>
                       <input
                         type="text"
                         name="wasteReductionInput"
@@ -120,9 +93,9 @@ export default function Home() {
                         }}
                         value={formValues?.wasteReductionInput}
                         disabled={formValues?.wasteReduction ? (false) : (true)}
-                        onChange={handleFormChange}
+                        onChange={(e) => handleFormChange("wasteReductionInput", e)}
                       /> kg/Tag
-                    </div> */}
+                    </div>
 
 
                   </div>
