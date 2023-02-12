@@ -1,15 +1,28 @@
 // #03403A
+// #023430
 // #D5F2EA
 // #02734A
-// #0CF246
+// #04BF45
+// #00ED64
 // #A9F20C
-// #016bf8
+// #056CF2
+// #05DBF2
+// #DCF2EC
+// #eef9f6
 // rgb(249, 114, 22)
 // rgb(225, 247, 255)
 // #1c2d38
+// #061621
+// #262223
 // #3d4f58
+// #5d6c74
 // #ff4500
+// #F2CE16
+// #F2A30F
 // #889397
+// #b8c4c2
+// #ECE4F2
+
 
 
 
@@ -35,6 +48,24 @@
   font-family: 'MDB';
   src: url('/assets/fonts/MongoDBValueSerif-Regular.woff2') format('woff2');
   font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Source Code Pro';
+  src: url('/assets/fonts/SourceCodePro-Regular.woff2') format('woff2');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Source Code Pro';
+  src: url('/assets/fonts/SourceCodePro-Light.woff2') format('woff2');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Source Code Pro';
+  src: url('/assets/fonts/SourceCodePro-Medium.woff2') format('woff2');
+  font-weight: 500;
 }
 
 

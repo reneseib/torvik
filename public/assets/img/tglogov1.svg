@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="168.51756mm"
+   height="49.717415mm"
+   viewBox="0 0 168.51756 49.717415"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.1 (9c6d41e4, 2022-07-14)"
+   sodipodi:docname="tglogo.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.50027344"
+     inkscape:cx="312.82892"
+     inkscape:cy="510.72069"
+     inkscape:window-width="1433"
+     inkscape:window-height="813"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-14.276637,-43.896659)">
+    <g
+       id="g5220"
+       inkscape:export-filename="tglogov1.svg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <path
+         id="path234"
+         style="fill:#a9f20c;fill-opacity:1;stroke-width:0.753304;stroke-linecap:square;stroke-linejoin:bevel;paint-order:stroke fill markers"
+         d="M 26.145816,43.896665 A 11.869177,11.869177 0 0 0 14.276637,55.765844 11.869177,11.869177 0 0 0 26.145816,67.635021 H 38.014994 V 55.765844 A 11.869177,11.869177 0 0 0 26.145816,43.896665 Z" />
+      <path
+         id="path234-2"
+         style="fill:#02734a;fill-opacity:1;stroke-width:0.753304;stroke-linecap:square;stroke-linejoin:bevel;paint-order:stroke fill markers"
+         d="M 52.124865,43.896665 A 11.869177,11.869177 0 0 1 63.994042,55.765842 11.869177,11.869177 0 0 1 52.124865,67.635019 H 40.255686 V 55.765842 A 11.869177,11.869177 0 0 1 52.124865,43.896665 Z" />
+      <path
+         id="path234-9"
+         style="fill:#00ed64;fill-opacity:1;stroke-width:0.753304;stroke-linecap:square;stroke-linejoin:bevel;paint-order:stroke fill markers"
+         d="M 26.145816,93.61407 A 11.869177,11.869177 0 0 1 14.276637,81.744889 11.869177,11.869177 0 0 1 26.145816,69.875711 H 38.014994 V 81.744889 A 11.869177,11.869177 0 0 1 26.145816,93.61407 Z" />
+      <path
+         id="path234-2-0"
+         style="fill:#04bf45;fill-opacity:1;stroke-width:0.753304;stroke-linecap:square;stroke-linejoin:bevel;paint-order:stroke fill markers"
+         d="M 52.124865,93.61407 A 11.869177,11.869177 0 0 0 63.994042,81.744893 11.869177,11.869177 0 0 0 52.124865,69.875715 H 40.255686 V 81.744893 A 11.869177,11.869177 0 0 0 52.124865,93.61407 Z" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.0256px;line-height:1;font-family:'BW Haas Grotesk Web';-inkscape-font-specification:'BW Haas Grotesk Web';text-align:center;text-anchor:middle;opacity:1;fill:#061621;fill-opacity:1;stroke-width:1.90663;stroke-linecap:square;stroke-linejoin:bevel;paint-order:stroke fill markers"
+         x="74.671562"
+         y="65.112038"
+         id="text1805"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:28.0256px;font-family:'BW Haas Grotesk Web';-inkscape-font-specification:'BW Haas Grotesk Web Bold';text-align:start;text-anchor:start;fill:#061621;fill-opacity:1;stroke-width:1.90663"
+           sodipodi:role="line"
+           id="tspan1865"
+           x="74.671562"
+           y="65.112038">TORVIK</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:28.0256px;font-family:'BW Haas Grotesk Web';-inkscape-font-specification:'BW Haas Grotesk Web Bold';text-align:start;text-anchor:start;fill:#061621;fill-opacity:1;stroke-width:1.90663"
+           x="74.671562"
+           y="93.137634"
+           id="tspan1811">GRUEN</tspan></text>
+    </g>
+  </g>
+</svg>

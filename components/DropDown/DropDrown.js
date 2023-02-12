@@ -8,8 +8,7 @@ const DropDrown = (props) => {
     const [state, stateSetter] = props.stateControl;
 
     useEffect(() => {
-        console.log("is open", isOpen);
-    }, [isOpen])
+    }, [isOpen, state])
 
     const handleStateSetting = (e) => {
         let value = e.target.dataset.value;
@@ -39,7 +38,7 @@ const DropDrown = (props) => {
                         <div className={styles.itemContainer}>
                             <a tabindex="-1" role="button" className="chart-toggle" chart-toggle="fixed-connections-chart">
                                 {
-                                    state === "gastro" ? (
+                                    state.id === "gastro" ? (
                                         <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true"><path d="M13 24L4 15 5.414 13.586 13 21.171 26.586 7.586 28 9 13 24z"></path><title>Checkmark</title></svg>
                                     ) : (null)
                                 }
@@ -53,7 +52,7 @@ const DropDrown = (props) => {
                         <div className={styles.itemContainer}>
                             <a tabindex="-1" role="button" className="chart-toggle" chart-toggle="fixed-connections-chart">
                                 {
-                                    state === "office" ? (
+                                    state.id === "office" ? (
                                         <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true"><path d="M13 24L4 15 5.414 13.586 13 21.171 26.586 7.586 28 9 13 24z"></path><title>Checkmark</title></svg>
                                     ) : (null)
                                 }

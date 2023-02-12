@@ -1,0 +1,19 @@
+.buttonWrapper {
+    display: block;
+    background: #00ED64;
+    color: #061621;
+    cursor: pointer;
+    border-radius: 6px;
+
+    &:hover {
+        border-radius: 40px;
+    }
+
+    & .buttonContainer {
+        padding: 16px 48px;
+
+        & .buttonText {
+            font-size: 16px;
+        }
+    }
+}

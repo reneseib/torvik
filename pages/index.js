@@ -3,6 +3,8 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.scss'
 
 import DropDown from '../components/DropDown';
+import Hero from '../components/Hero';
+import Tabs from '../components/Tabs';
 import CheckBox from '../components/CheckBox';
 
 export default function Home() {
@@ -27,20 +29,20 @@ export default function Home() {
 
   const submitForm = async () => {
     let resp = await fetch("api/v1/form", {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      mode: 'cors', // no-cors, *cors, same-origin
-      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: 'same-origin', // include, *same-origin, omit
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json'
-        // 'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: JSON.stringify({ "sector": selectValue, ...formValues }) // body data type must match "Content-Type" header
+      body: JSON.stringify({ "sector": selectValue, ...formValues })
     })
     return resp
   }
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     let resp = await submitForm()
     let json = await resp.json();
     if (resp.status === 200) {
@@ -62,28 +64,31 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Hero />
       <main className={styles.main}>
         <div className={styles.container}>
           <form className={styles.form}>
-            <DropDown stateControl={[selectValue, setSelectValue]} />
+            {/* <DropDown stateControl={[selectValue, setSelectValue]} /> */}
+            <Tabs />
 
             <div className={styles.formContent}>
-              <h2>{selectValue.text}</h2>
               <div className={styles.checkBoxWrapper}>
                 <div className={styles.checkBoxContainer}>
-                  <div style={{ marginTop: "2em", display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
-
-                    <CheckBox
-                      name="wasteReduction"
-                      value="wasteReduction"
-                      state={formValues}
-                      stateSetter={handleFormChange}
-                    />
-                    <div style={{ padding: "0 0 0 1em" }}>
-                      <h4>Müllvermeidung</h4>
-                      <p>Wenn der Mieter im Programm "Food Sharing" teilnehmen kann.</p>
+                  <div className={styles.extendableContainer}>
+                    <div style={{ marginTop: "2em", display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
+                      <CheckBox
+                        name="wasteReduction"
+                        value="wasteReduction"
+                        state={formValues}
+                        stateSetter={handleFormChange}
+                      />
+                      <div style={{ padding: "0 0 0 1em" }}>
+                        <h4>Abfallvermeidung</h4>
+                        <p>Wenn der Mieter bereit ist, sein Abfallaufkommen zu reduzieren.</p>
+                      </div>
                     </div>
-                    <div className={`${styles.additionalInput} ${formValues.wasteReduction ? (styles.isActive) : ("")}`}>
+                    <div className={`${styles.extendableContent} ${formValues?.wasteReduction ? (styles.isActive) : ("")}`}>
+
                       <input
                         type="text"
                         name="wasteReductionInput"
@@ -96,10 +101,7 @@ export default function Home() {
                         onChange={(e) => handleFormChange("wasteReductionInput", e)}
                       /> kg/Tag
                     </div>
-
-
                   </div>
-
                 </div>
                 <div style={{ marginTop: "2em", display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
                   <CheckBox
