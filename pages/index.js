@@ -68,8 +68,8 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.container}>
           <form className={styles.form}>
-            {/* <DropDown stateControl={[selectValue, setSelectValue]} /> */}
-            <Tabs />
+            <DropDown stateControl={[selectValue, setSelectValue]} />
+            {/* <Tabs /> */}
 
             <div className={styles.formContent}>
               <div className={styles.checkBoxWrapper}>
