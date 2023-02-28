@@ -9,9 +9,131 @@ import CheckBox from '../components/CheckBox';
 
 export default function Home() {
 
+  const formCfg = {
+    position: {
+      text: "Was ist Ihre Jobbezeichnung?",
+      id: "position",
+      type: "input"
+    },
+    mietflaeche: {
+      text: "Wieviel qm hat die Mietfläche Ihres Mieters?",
+      id: "mietflaeche",
+      type: "input",
+      limit: "digits",
+    },
+    tafel_yesno: {
+      text: 'Wird Ihr Mieter Mitglied bei "die Tafel"?',
+      id: "tafel_yesno",
+      type: "switch",
+    },
+    tgtg_yesno: {
+      text: 'Wird Ihr Mieter Mitglied bei "too good to go"?',
+      id: "tgtg_yesno",
+      type: "switch",
+    },
+    zgfdt_yesno: {
+      text: 'Wird Ihr Mieter Mitglied bei "Zu gut für die Tonne"?',
+      id: "zgfdt_yesno",
+      type: "switch",
+    },
+    regu_yesno: {
+      text: 'Wird Ihr Mieter Mitglied bei "Restlos glücklich"?',
+      id: "regu_yesno",
+      type: "switch",
+    },
+    wmnw_yesno: {
+      text: 'Wird Ihr Mieter Mitglied bei "Wirf mich nicht weg"?',
+      id: "wmnw_yesno",
+      type: "switch",
+    },
+    zuto_yesno: {
+      text: 'Wird Ihr Mieter Mitglied bei "Zur Tonne"?',
+      id: "zuto_yesno",
+      type: "switch",
+    },
+    opnv_yesno: {
+      text: 'Wird Ihr Mieter Kunden mit tagesaktuellen ÖPNV-Ticket einen Rabatt von 5% gewähren?',
+      id: "opnv_yesno",
+      type: "switch",
+    },
+    nahe_yesno: {
+      text: 'Wird Ihr Mieter seine Waren möglichst regional beziehen?',
+      id: "nahe_yesno",
+      type: "switch",
+    },
+    port_yesno: {
+      text: 'Wird Ihr Mieter angemessen große Portionen anbieten um Lebensmittelabfälle zu vermeiden?',
+      id: "port_yesno",
+      type: "switch",
+    },
+    gesch_yesno: {
+      text: 'Wird Ihr Mieter Mehrweggeschirr anbieten und/oder Plastikverpackungen meiden?',
+      id: "gesch_yesno",
+      type: "switch",
+    },
+    pfand_yesno: {
+      text: 'Wird Ihr Mieter an Pfandsystemen wie z.B. Recup, Relevo oder Vytal teilnehmen?',
+      id: "pfand_yesno",
+      type: "switch",
+    },
+    emob_yesno: {
+      text: 'Bietet Ihr Mieter Lieferdienste an und wird diese mit verbrennungsfreier Mobilität (z.B. Fahrrad, e-Scooter, elektrisches Auto, usw.) durchführen?',
+      id: "emob_yesno",
+      type: "switch",
+    },
+    lebensmittel: {
+      text: 'Wieviel kg Essenabfälle wird Ihr Mieter im Monat insgesammt vermeiden?',
+      id: "lebensmittel",
+      type: "switch-input",
+      limit: "digits",
+    },
+    stromverbrauch: {
+      text: 'Wieviel Strom in kWh verbraucht Ihr Mieter bisher im Monat im Mittel?',
+      id: "stromverbrauch",
+      type: "input",
+      limit: "digits",
+    },
+    wenigerstrom: {
+      text: 'Wieviel davon in % plant Ihr Mieter einzusparen?',
+      id: "wenigerstrom",
+      type: "input",
+      limit: "digits",
+      min: 0,
+      max: 100,
+    },
+    erneuerbar: {
+      text: 'Wieviel % vom verbleibenden Strom wird ihr Mieter durch erneuerbare Energien beziehen?',
+      id: "erneuerbar",
+      type: "input",
+      limit: "digits",
+      min: 0,
+      max: 100,
+    },
+  }
+
+
   const [selectValue, setSelectValue] = useState("")
   const [formValues, setFormValues] = useState(
-    { wasteReduction: false, foodSharing: false, tooGoodToGo: false, wasteReductionInput: '', sector: 'gastro' }
+    {
+      position: null,
+      mietflaeche: null,
+      tafel_yesno: false,
+      tgtg_yesno: false,
+      zgfdt_yesno: false,
+      regu_yesno: false,
+      wmnw_yesno: false,
+      zuto_yesno: false,
+      opnv_yesno: false,
+      nahe_yesno: false,
+      port_yesno: false,
+      gesch_yesno: false,
+      pfand_yesno: false,
+      emob_yesno: false,
+      lebensmittel: 0,
+      stromverbrauch: 0,
+      wenigerstrom: 0,
+      erneuerbar: 0,
+    }
   );
   const [result, setResult] = useState(null)
 
@@ -28,7 +150,11 @@ export default function Home() {
   }
 
   const submitForm = async () => {
-    let resp = await fetch("api/v1/gastro", {
+    // ADD IP, ID, TIME HERE TO DATA
+
+    // ADD CONVERSION YES/NO HERE
+
+    let resp = await fetch("api/v1/form", {
       method: 'POST',
       mode: 'cors',
       cache: 'no-cache',
@@ -36,7 +162,7 @@ export default function Home() {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ "sector": selectValue, ...formValues })
+      body: JSON.stringify({ ...formValues })
     })
     return resp
   }
@@ -75,6 +201,70 @@ export default function Home() {
               <div className={styles.checkBoxWrapper}>
                 <div className={styles.checkBoxContainer}>
                   <div className={styles.extendableContainer}>
+                    {
+                      Object.keys(formCfg).map((key, i) => {
+                        if (formCfg[key].type === 'switch') {
+                          return (
+                            <div style={{ marginTop: "2em", display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
+                              <CheckBox
+                                name={key}
+                                value={formValues}
+                                state={formValues}
+                                stateSetter={handleFormChange}
+                              />
+                              <div style={{ padding: "0 0 0 1em" }}>
+                                <h4>{formCfg[key].text}</h4>
+                                <p>{formCfg[key].description}</p>
+                              </div>
+                            </div>
+                          )
+                        } else {
+                          return (
+                            <>
+                              <label htmlFor={key} style={{ margin: "2em 0 0.5em", fontWeight: "bold" }}>{formCfg[key].text}</label>
+                              <input
+                                type="text"
+                                name={key}
+                                placeholder={""}
+                                style={{
+                                  marginRight: "1em",
+                                }}
+                                value={formValues[key]}
+                                // disabled={formValues?.wasteReduction ? (false) : (true)}
+                                onChange={(e) => handleFormChange(key, e)}
+                              />
+                            </>
+                          )
+                        }
+                      })
+                    }
+                    {/* <label htmlFor="position" style={{ margin: "0.25em 0", fontWeight: "bold" }}>Ihr Position:</label>
+                    <input
+                      type="text"
+                      name="position"
+                      placeholder="Position"
+                      style={{
+                        marginRight: "1em",
+                      }}
+                      value={formValues?.position}
+                      // disabled={formValues?.wasteReduction ? (false) : (true)}
+                      onChange={(e) => handleFormChange("position", e)}
+                    />
+
+                    <label htmlFor="mietflaeche" style={{ margin: "0.25em 0", fontWeight: "bold" }}>Mietfläche :</label>
+                    <input
+                      type="text"
+                      name="mietflaeche"
+                      placeholder="qm"
+                      style={{
+                        marginRight: "1em",
+                      }}
+                      value={formValues?.position}
+                      // disabled={formValues?.wasteReduction ? (false) : (true)}
+                      onChange={(e) => handleFormChange("position", e)}
+                    />
+
+
                     <div style={{ marginTop: "2em", display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
                       <CheckBox
                         name="wasteReduction"
@@ -100,112 +290,13 @@ export default function Home() {
                         disabled={formValues?.wasteReduction ? (false) : (true)}
                         onChange={(e) => handleFormChange("wasteReductionInput", e)}
                       /> kg/Tag
-                    </div>
-                  </div>
-                </div>
-                <div style={{ marginTop: "2em", display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
-                  <CheckBox
-                    name="foodSharing"
-                    value="foodSharing"
-                    state={formValues}
-                    stateSetter={handleFormChange}
-                  />
-                  <div style={{ padding: "0 0 0 1em" }}>
-                    <h4>Food Sharing</h4>
-                    <p>Wenn der Mieter im Programm "Food Sharing" teilnehmen kann.</p>
-                  </div>
-                </div>
-                <div style={{ marginTop: "2em", display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
-                  <CheckBox
-                    name="foodSharing"
-                    value="foodSharing"
-                    state={formValues}
-                    stateSetter={handleFormChange}
-                  />
-                  <div style={{ padding: "0 0 0 1em" }}>
-                    <h4>Food Sharing</h4>
-                    <p>Wenn der Mieter im Programm "Food Sharing" teilnehmen kann.</p>
-                  </div>
-                </div>
-                <div style={{ marginTop: "2em", display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
-                  <CheckBox
-                    name="foodSharing"
-                    value="foodSharing"
-                    state={formValues}
-                    stateSetter={handleFormChange}
-                  />
-                  <div style={{ padding: "0 0 0 1em" }}>
-                    <h4>Food Sharing</h4>
-                    <p>Wenn der Mieter im Programm "Food Sharing" teilnehmen kann.</p>
-                  </div>
-                </div>
-                <div style={{ marginTop: "2em", display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
-                  <CheckBox
-                    name="foodSharing"
-                    value="foodSharing"
-                    state={formValues}
-                    stateSetter={handleFormChange}
-                  />
-                  <div style={{ padding: "0 0 0 1em" }}>
-                    <h4>Food Sharing</h4>
-                    <p>Wenn der Mieter im Programm "Food Sharing" teilnehmen kann.</p>
-                  </div>
-                </div>
-                <div style={{ marginTop: "2em", display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
-                  <CheckBox
-                    name="foodSharing"
-                    value="foodSharing"
-                    state={formValues}
-                    stateSetter={handleFormChange}
-                  />
-                  <div style={{ padding: "0 0 0 1em" }}>
-                    <h4>Food Sharing</h4>
-                    <p>Wenn der Mieter im Programm "Food Sharing" teilnehmen kann.</p>
-                  </div>
-                </div>
-                <div style={{ marginTop: "2em", display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
-                  <CheckBox
-                    name="foodSharing"
-                    value="foodSharing"
-                    state={formValues}
-                    stateSetter={handleFormChange}
-                  />
-                  <div style={{ padding: "0 0 0 1em" }}>
-                    <h4>Food Sharing</h4>
-                    <p>Wenn der Mieter im Programm "Food Sharing" teilnehmen kann.</p>
-                  </div>
-                </div>
-                <div style={{ marginTop: "2em", display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
-                  <CheckBox
-                    name="foodSharing"
-                    value="foodSharing"
-                    state={formValues}
-                    stateSetter={handleFormChange}
-                  />
-                  <div style={{ padding: "0 0 0 1em" }}>
-                    <h4>Food Sharing</h4>
-                    <p>Wenn der Mieter im Programm "Food Sharing" teilnehmen kann.</p>
-                  </div>
-                </div>
-                <div style={{ marginTop: "2em", display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
-                  <CheckBox
-                    name="tooGoodToGo"
-                    value="tooGoodToGo"
-                    state={formValues} stateSetter={handleFormChange} />
-                  <div style={{ padding: "0 0 0 1em" }}>
-                    <h4>Too good to go</h4>
-                    <p>Wenn der Mieter im Programm "Too good to go" teilnehmen kann.</p>
+                    </div> */}
                   </div>
                 </div>
               </div>
             </div>
-            <div style={{ marginTop: "2em" }}>
-              <button className={"btn"} onClick={handleSubmit} action="">
-                <div className={"btnContent"}>
-                  CO2 Einsparung kalkulieren
-                </div>
-              </button>
-            </div>
+            <div onClick={(e) => { e.preventDefault; submitForm() }}>SEND</div>
+
           </form>
           {
             result !== null ? (
