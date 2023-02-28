@@ -117,6 +117,78 @@ export default function Home() {
                 </div>
                 <div style={{ marginTop: "2em", display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
                   <CheckBox
+                    name="foodSharing"
+                    value="foodSharing"
+                    state={formValues}
+                    stateSetter={handleFormChange}
+                  />
+                  <div style={{ padding: "0 0 0 1em" }}>
+                    <h4>Food Sharing</h4>
+                    <p>Wenn der Mieter im Programm "Food Sharing" teilnehmen kann.</p>
+                  </div>
+                </div>
+                <div style={{ marginTop: "2em", display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
+                  <CheckBox
+                    name="foodSharing"
+                    value="foodSharing"
+                    state={formValues}
+                    stateSetter={handleFormChange}
+                  />
+                  <div style={{ padding: "0 0 0 1em" }}>
+                    <h4>Food Sharing</h4>
+                    <p>Wenn der Mieter im Programm "Food Sharing" teilnehmen kann.</p>
+                  </div>
+                </div>
+                <div style={{ marginTop: "2em", display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
+                  <CheckBox
+                    name="foodSharing"
+                    value="foodSharing"
+                    state={formValues}
+                    stateSetter={handleFormChange}
+                  />
+                  <div style={{ padding: "0 0 0 1em" }}>
+                    <h4>Food Sharing</h4>
+                    <p>Wenn der Mieter im Programm "Food Sharing" teilnehmen kann.</p>
+                  </div>
+                </div>
+                <div style={{ marginTop: "2em", display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
+                  <CheckBox
+                    name="foodSharing"
+                    value="foodSharing"
+                    state={formValues}
+                    stateSetter={handleFormChange}
+                  />
+                  <div style={{ padding: "0 0 0 1em" }}>
+                    <h4>Food Sharing</h4>
+                    <p>Wenn der Mieter im Programm "Food Sharing" teilnehmen kann.</p>
+                  </div>
+                </div>
+                <div style={{ marginTop: "2em", display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
+                  <CheckBox
+                    name="foodSharing"
+                    value="foodSharing"
+                    state={formValues}
+                    stateSetter={handleFormChange}
+                  />
+                  <div style={{ padding: "0 0 0 1em" }}>
+                    <h4>Food Sharing</h4>
+                    <p>Wenn der Mieter im Programm "Food Sharing" teilnehmen kann.</p>
+                  </div>
+                </div>
+                <div style={{ marginTop: "2em", display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
+                  <CheckBox
+                    name="foodSharing"
+                    value="foodSharing"
+                    state={formValues}
+                    stateSetter={handleFormChange}
+                  />
+                  <div style={{ padding: "0 0 0 1em" }}>
+                    <h4>Food Sharing</h4>
+                    <p>Wenn der Mieter im Programm "Food Sharing" teilnehmen kann.</p>
+                  </div>
+                </div>
+                <div style={{ marginTop: "2em", display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
+                  <CheckBox
                     name="tooGoodToGo"
                     value="tooGoodToGo"
                     state={formValues} stateSetter={handleFormChange} />
