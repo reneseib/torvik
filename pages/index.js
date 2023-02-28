@@ -28,7 +28,7 @@ export default function Home() {
   }
 
   const submitForm = async () => {
-    let resp = await fetch("http://46.101.191.192:8000/gastro", {
+    let resp = await fetch("api/v1/gastro", {
       method: 'POST',
       mode: 'cors',
       cache: 'no-cache',
