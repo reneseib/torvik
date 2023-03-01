@@ -254,9 +254,9 @@ export default function Home() {
             result !== null ? (
               <div className={styles.resultContainer}>
                 <h3 style={{ margin: "0em 0 1em" }}>Ergebnis:</h3>
-                CO2-Einsparung gesammt:<br /> <h2>{result.savings}  Tonnen pro Jahr</h2>
+                CO2-Einsparung gesammt:<br /> <h2>{result.savings.toLocaleString(navigator.language, { minimumFractionDigits: 3, maximumFractionDigits: 3 })}  Tonnen pro Jahr</h2>
                 <br /><br />
-                CO2-Einsparung gesammt bezogen auf Mietfläche:<br /> <h2>{result.savings_sqm} Tonnen pro m2 pro Jahr</h2>
+                CO2-Einsparung gesammt bezogen auf Mietfläche:<br /> <h2>{result.savings_sqm.toLocaleString(navigator.language, { minimumFractionDigits: 3, maximumFractionDigits: 3 })} Tonnen pro m2 pro Jahr</h2>
               </div>
             ) : (null)
           }
