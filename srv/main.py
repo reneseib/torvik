@@ -10,8 +10,6 @@ from datetime import datetime
 from pydantic import BaseModel
 
 app = FastAPI()
-# # # app.mount("/static", StaticFiles(directory="static"), name="static")
-# # # templates = Jinja2Templates(directory="templates")
 
 # Define database connection parameters
 DATABASE = "your_database_name"
@@ -51,9 +49,9 @@ conn = psycopg2.connect(
 )
 
 
-# @app.on_event("shutdown")
-# def shutdown_event():
-#     conn.close()
+@app.on_event("shutdown")
+def shutdown_event():
+    conn.close()
 
 
 class Gastro(BaseModel):
@@ -176,16 +174,5 @@ async def result(request: Request):
                     data["erneuerbar"],
                 ),
             )
-    print({"savings": co2_savings, "savings_sqm": co2_savings_pqm})
+
     return {"savings": co2_savings, "savings_sqm": co2_savings_pqm}
-
-
-# templates.TemplateResponse(
-#         "result.html",
-#         {
-#             "request": request,
-#             "co2_savings": co2_savings,
-#             "co2_savings_pqm": co2_savings_pqm,
-#             "mietflaeche": mietflaeche
-#         }
-#     )
