@@ -1,4 +1,4 @@
-import psycopg2
+# import psycopg2
 from typing import Union
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
@@ -44,14 +44,14 @@ class FormEntry(BaseModel):
 
 
 # Connect to the database
-conn = psycopg2.connect(
-    database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT
-)
+# conn = psycopg2.connect(
+#     database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT
+# )
 
 
-@app.on_event("shutdown")
-def shutdown_event():
-    conn.close()
+# @app.on_event("shutdown")
+# def shutdown_event():
+#     conn.close()
 
 
 class Gastro(BaseModel):
@@ -146,33 +146,33 @@ async def result(request: Request):
     if data["mietflaeche"] > 0:
         co2_savings_pqm = co2_savings / data["mietflaeche"]
 
-    # Insert the form entry into the database
-    with conn:
-        with conn.cursor() as cur:
-            cur.execute(
-                "INSERT INTO form_entries (timestamp, ip_address, position, mietflaeche, tafel_yesno, tgtg_yesno, zgfdt_yesno, regu_yesno, wmnw_yesno, zuto_yesno, opnv_yesno, nahe_yesno, port_yesno, gesch_yesno, pfand_yesno, emob_yesno, lebensmittel, stromverbrauch, wenigerstrom, erneuerbar) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                (
-                    datetime.now(),
-                    data["ip_address"],
-                    data["position"],
-                    data["mietflaeche"],
-                    data["tafel_yesno"],
-                    data["tgtg_yesno"],
-                    data["zgfdt_yesno"],
-                    data["regu_yesno"],
-                    data["wmnw_yesno"],
-                    data["zuto_yesno"],
-                    data["opnv_yesno"],
-                    data["nahe_yesno"],
-                    data["port_yesno"],
-                    data["gesch_yesno"],
-                    data["pfand_yesno"],
-                    data["emob_yesno"],
-                    data["lebensmittel"],
-                    data["stromverbrauch"],
-                    data["wenigerstrom"],
-                    data["erneuerbar"],
-                ),
-            )
+        # Insert the form entry into the database
+    #     # with conn:
+    #     with conn.cursor() as cur:
+    #         cur.execute(
+    #             "INSERT INTO form_entries (timestamp, ip_address, position, mietflaeche, tafel_yesno, tgtg_yesno, zgfdt_yesno, regu_yesno, wmnw_yesno, zuto_yesno, opnv_yesno, nahe_yesno, port_yesno, gesch_yesno, pfand_yesno, emob_yesno, lebensmittel, stromverbrauch, wenigerstrom, erneuerbar) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+    #             (
+    #                 datetime.now(),
+    #                 data["ip_address"],
+    #                 data["position"],
+    #                 data["mietflaeche"],
+    #                 data["tafel_yesno"],
+    #                 data["tgtg_yesno"],
+    #                 data["zgfdt_yesno"],
+    #                 data["regu_yesno"],
+    #                 data["wmnw_yesno"],
+    #                 data["zuto_yesno"],
+    #                 data["opnv_yesno"],
+    #                 data["nahe_yesno"],
+    #                 data["port_yesno"],
+    #                 data["gesch_yesno"],
+    #                 data["pfand_yesno"],
+    #                 data["emob_yesno"],
+    #                 data["lebensmittel"],
+    #                 data["stromverbrauch"],
+    #                 data["wenigerstrom"],
+    #                 data["erneuerbar"],
+    #             ),
+    #         )
 
     return {"savings": co2_savings, "savings_sqm": co2_savings_pqm}

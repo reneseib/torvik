@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import styles from './styles.module.scss';
 
@@ -7,6 +7,31 @@ const DropDrown = (props) => {
     const [isOpen, setIsOpen] = useState(false);
     const [state, stateSetter] = props.stateControl;
 
+    const handleClickOutside = () => {
+        setIsOpen(false);
+    }
+
+    const useOutsideClick = (callback) => {
+        const ref = React.useRef();
+
+        useEffect(() => {
+            const handleClick = (event) => {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    callback();
+                }
+            };
+
+            document.addEventListener('click', handleClick);
+
+            return () => {
+                document.removeEventListener('click', handleClick);
+            };
+        }, [ref]);
+
+        return ref;
+    };
+
+    const ref = useOutsideClick(handleClickOutside);
 
 
     const handleStateSetting = (e) => {
@@ -58,7 +83,7 @@ const DropDrown = (props) => {
                 </button>
 
                 <ul className={`${styles.dropDownMenu} ${isOpen ? (styles.isOpen) : (null)}`} role="menu">
-                    <li className="active" data-value="gastro" onClick={(e) => handleStateSetting(e)} >
+                    <li className="active" data-value="gastro" onClick={(e) => handleStateSetting(e)}>
                         <div className={styles.itemContainer}>
                             <a tabindex="-1" role="button">
                                 {
