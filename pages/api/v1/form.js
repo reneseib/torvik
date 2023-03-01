@@ -6,7 +6,7 @@ export default async function handler(req, res) {
 
         // process data to types
         try {
-            data["ip_address"] = "127.0.0.1";
+            data["ip_address"] = req.socket.remoteAddress;
             data["mietflaeche"] = parseInt(data["mietflaeche"]);
             data["lebensmittel"] = parseInt(data["lebensmittel"]);
             data["stromverbrauch"] = parseInt(data["stromverbrauch"]);
