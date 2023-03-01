@@ -27,7 +27,7 @@ export default async function handler(req, res) {
 
         console.log(data);
 
-        let resp = await fetch("http://127.0.0.1:8000/gastro", {
+        let resp = await fetch("http://46.101.191.192:8000/gastro", {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',

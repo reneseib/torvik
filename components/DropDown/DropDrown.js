@@ -74,22 +74,22 @@ const DropDrown = (props) => {
                     <li className={styles.dropDownHeader}>Bald verfügbar:</li>
                     <li className="disabled" data-value="textil" >
                         <div className={styles.itemContainer}>
-                            <a tabindex="-1" role="button" className="chart-toggle" chart-toggle="fixed-connections-chart"><i className="mms-icon-check"></i> Textil</a>
+                            <a tabindex="-1" role="button"> Textil</a>
                         </div>
                     </li>
                     <li className="disabled" data-value="hartwaren" >
                         <div className={styles.itemContainer}>
-                            <a tabindex="-1" role="button" className="chart-toggle" chart-toggle="fixed-connections-chart"><i className="mms-icon-check"></i> Hartwaren</a>
+                            <a tabindex="-1" role="button"> Hartwaren</a>
                         </div>
                     </li>
                     <li className="disabled" data-value="dienstleistung" >
                         <div className={styles.itemContainer}>
-                            <a tabindex="-1" role="button" className="chart-toggle" chart-toggle="fixed-connections-chart"><i className="mms-icon-check"></i> Dienstleistung</a>
+                            <a tabindex="-1" role="button"> Dienstleistung</a>
                         </div>
-                    </li>
+                    </li >
 
-                </ul>
-            </div>
+                </ul >
+            </div >
         </div >
     );
 };
