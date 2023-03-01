@@ -4,6 +4,27 @@
     min-width: 250px;
     font-family: "Euclid Circular A", Akzidenz, "Helvetica Neue", Helvetica, Arial, sans-serif;
 
+    & .itemShow {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+
+        & div a {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+
+            & svg {
+                margin-right: 0.5em;
+            }
+        }
+
+
+    }
+
     & .caret {
         // position: absolute;
         // right: 8px;

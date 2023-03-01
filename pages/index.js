@@ -192,7 +192,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Hero />
-      <main className={styles.main}>
+      <main className={styles.main} id="main">
         <div className={styles.container}>
           <form className={styles.form}>
             <DropDown stateControl={[selectValue, setSelectValue]} />
@@ -243,15 +243,20 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div id="submit-btn" onClick={(e) => { e.preventDefault; handleSubmit(e) }}>SEND</div>
+            <div
+              className={styles.submit}
+              id="submit-btn" onClick={(e) => { e.preventDefault; handleSubmit(e) }}>
+              Berechnen
+            </div>
 
           </form>
           {
             result !== null ? (
               <div className={styles.resultContainer}>
-                CO2-Einsparung gesammt: {result.savings} Tonnen pro Jahr.
+                <h3 style={{ margin: "0em 0 1em" }}>Ergebnis:</h3>
+                CO2-Einsparung gesammt:<br /> <h2>{result.savings}  Tonnen pro Jahr</h2>
                 <br /><br />
-                CO2-Einsparung gesammt bezogen auf Mietfläche: {result.savings_sqm} Tonnen pro m2 pro Jahr.
+                CO2-Einsparung gesammt bezogen auf Mietfläche:<br /> <h2>{result.savings_sqm} Tonnen pro m2 pro Jahr</h2>
               </div>
             ) : (null)
           }

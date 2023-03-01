@@ -12,6 +12,16 @@
     font-size: 1em;
   }
 
+  .submit {
+    padding: 0.5em;
+    background: #02734A;
+    color: white;
+    width: fit-content;
+    border-radius: 4px;
+    margin-top: 1.5em;
+    font-weight: bold;
+  }
+
   .container {
     width: 66.67%;
     height: auto;
@@ -93,7 +103,11 @@
     }
 
     & .resultContainer {
+      width: 66%;
       margin-top: 2em;
+      background: #eef9f6;
+      padding: 2em;
+      // padding-right: 10em;
     }
   }
 }
