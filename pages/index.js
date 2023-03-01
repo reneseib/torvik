@@ -164,12 +164,13 @@ export default function Home() {
       },
       body: JSON.stringify({ ...formValues })
     })
+    console.log(resp)
     return resp
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let resp = await submitForm()
+    let resp = await submitForm();
     let json = await resp.json();
     if (resp.status === 200) {
       setResult(json.result);
@@ -195,7 +196,6 @@ export default function Home() {
         <div className={styles.container}>
           <form className={styles.form}>
             <DropDown stateControl={[selectValue, setSelectValue]} />
-            {/* <Tabs /> */}
 
             <div className={styles.formContent}>
               <div className={styles.checkBoxWrapper}>
@@ -223,14 +223,15 @@ export default function Home() {
                             <>
                               <label htmlFor={key} style={{ margin: "2em 0 0.5em", fontWeight: "bold" }}>{formCfg[key].text}</label>
                               <input
-                                type="text"
+                                type={"text"}
                                 name={key}
                                 placeholder={""}
                                 style={{
                                   marginRight: "1em",
                                 }}
                                 value={formValues[key]}
-                                // disabled={formValues?.wasteReduction ? (false) : (true)}
+
+                                // ADD ERROR CHECK
                                 onChange={(e) => handleFormChange(key, e)}
                               />
                             </>
@@ -238,70 +239,19 @@ export default function Home() {
                         }
                       })
                     }
-                    {/* <label htmlFor="position" style={{ margin: "0.25em 0", fontWeight: "bold" }}>Ihr Position:</label>
-                    <input
-                      type="text"
-                      name="position"
-                      placeholder="Position"
-                      style={{
-                        marginRight: "1em",
-                      }}
-                      value={formValues?.position}
-                      // disabled={formValues?.wasteReduction ? (false) : (true)}
-                      onChange={(e) => handleFormChange("position", e)}
-                    />
-
-                    <label htmlFor="mietflaeche" style={{ margin: "0.25em 0", fontWeight: "bold" }}>Mietfläche :</label>
-                    <input
-                      type="text"
-                      name="mietflaeche"
-                      placeholder="qm"
-                      style={{
-                        marginRight: "1em",
-                      }}
-                      value={formValues?.position}
-                      // disabled={formValues?.wasteReduction ? (false) : (true)}
-                      onChange={(e) => handleFormChange("position", e)}
-                    />
-
-
-                    <div style={{ marginTop: "2em", display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
-                      <CheckBox
-                        name="wasteReduction"
-                        value="wasteReduction"
-                        state={formValues}
-                        stateSetter={handleFormChange}
-                      />
-                      <div style={{ padding: "0 0 0 1em" }}>
-                        <h4>Abfallvermeidung</h4>
-                        <p>Wenn der Mieter bereit ist, sein Abfallaufkommen zu reduzieren.</p>
-                      </div>
-                    </div>
-                    <div className={`${styles.extendableContent} ${formValues?.wasteReduction ? (styles.isActive) : ("")}`}>
-
-                      <input
-                        type="text"
-                        name="wasteReductionInput"
-                        placeholder="X"
-                        style={{
-                          marginRight: "1em",
-                        }}
-                        value={formValues?.wasteReductionInput}
-                        disabled={formValues?.wasteReduction ? (false) : (true)}
-                        onChange={(e) => handleFormChange("wasteReductionInput", e)}
-                      /> kg/Tag
-                    </div> */}
                   </div>
                 </div>
               </div>
             </div>
-            <div onClick={(e) => { e.preventDefault; submitForm() }}>SEND</div>
+            <div id="submit-btn" onClick={(e) => { e.preventDefault; handleSubmit(e) }}>SEND</div>
 
           </form>
           {
             result !== null ? (
               <div className={styles.resultContainer}>
-                Die Maßnahmen ergeben eine CO2 Einsparung von: {result} kg pro Jahr
+                CO2-Einsparung gesammt: {result.savings} Tonnen pro Jahr.
+                <br /><br />
+                CO2-Einsparung gesammt bezogen auf Mietfläche: {result.savings_sqm} Tonnen pro m2 pro Jahr.
               </div>
             ) : (null)
           }
