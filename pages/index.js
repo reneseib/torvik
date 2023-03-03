@@ -9,17 +9,20 @@ import CheckBox from '../components/CheckBox';
 
 export default function Home() {
 
+
   const formCfg = {
     position: {
       text: "Was ist Ihre Jobbezeichnung?",
       id: "position",
-      type: "input"
+      type: "input",
+      validate: ["not-empty"]
     },
     mietflaeche: {
       text: "Wieviel qm hat die Mietfläche Ihres Mieters?",
       id: "mietflaeche",
       type: "input",
       limit: "digits",
+      validate: ["is-digit", "not-empty", "gt-zero"]
     },
     tafel_yesno: {
       text: 'Wird Ihr Mieter Mitglied bei "die Tafel"?',
@@ -82,10 +85,11 @@ export default function Home() {
       type: "switch",
     },
     lebensmittel: {
-      text: 'Wieviel kg Essenabfälle wird Ihr Mieter im Monat insgesammt vermeiden?',
+      text: 'Wieviel kg Lebensmittelabfälle wird Ihr Mieter im Monat insgesamt vermeiden?',
       id: "lebensmittel",
       type: "switch-input",
       limit: "digits",
+      validate: ["is-digit", "not-empty", "gt-zero"]
     },
     stromverbrauch: {
       text: 'Wieviel Strom in kWh verbraucht Ihr Mieter bisher im Monat im Mittel?',
@@ -98,25 +102,28 @@ export default function Home() {
       id: "wenigerstrom",
       type: "input",
       limit: "digits",
-      min: 0,
-      max: 100,
     },
     erneuerbar: {
       text: 'Wieviel % vom verbleibenden Strom wird ihr Mieter durch erneuerbare Energien beziehen?',
       id: "erneuerbar",
       type: "input",
       limit: "digits",
-      min: 0,
-      max: 100,
     },
   }
 
-
+  const [errors, setErrors] = useState({
+    position: "",
+    mietflaeche: "",
+    lebensmittel: "",
+    stromverbrauch: "",
+    wenigerstrom: "",
+    erneuerbar: "",
+  })
   const [selectValue, setSelectValue] = useState("")
   const [formValues, setFormValues] = useState(
     {
-      position: null,
-      mietflaeche: null,
+      position: "",
+      mietflaeche: "",
       tafel_yesno: false,
       tgtg_yesno: false,
       zgfdt_yesno: false,
@@ -129,12 +136,13 @@ export default function Home() {
       gesch_yesno: false,
       pfand_yesno: false,
       emob_yesno: false,
-      lebensmittel: 0,
-      stromverbrauch: 0,
-      wenigerstrom: 0,
-      erneuerbar: 0,
+      lebensmittel: "",
+      stromverbrauch: "",
+      wenigerstrom: "",
+      erneuerbar: "",
     }
   );
+
   const [result, setResult] = useState(null)
 
 
@@ -164,24 +172,101 @@ export default function Home() {
       },
       body: JSON.stringify({ ...formValues })
     })
-    console.log(resp)
     return resp
+  }
+
+  const validateForm = () => {
+    let inputErrors = []
+
+    Object.keys(formValues).map((key) => {
+      if (key === "position" && formValues["position"] === "") {
+        errors[key] = "Dieses Feld muss ausgefüllt werden."
+        inputErrors.push(key)
+      }
+
+      if (key === "mietflaeche") {
+        if (parseInt(formValues["mietflaeche"]) < 1 || Number.isNaN(parseInt(formValues["mietflaeche"]))) {
+          errors["mietflaeche"] = "Dieses Feld muss ausgefüllt werden. Bitte nur Zahlen verwenden"
+          inputErrors.push(key)
+        }
+      }
+
+      if (key === "lebensmittel" && formValues["mietflaeche"] < parseInt(1)) {
+        errors[key] = "Dieses Feld muss ausgefüllt werden."
+        inputErrors.push(key)
+      }
+    })
+
+    setErrors({ ...errors })
+    return inputErrors
+  }
+
+  const resetForm = () => {
+    setFormValues({
+      position: "",
+      mietflaeche: "",
+      tafel_yesno: false,
+      tgtg_yesno: false,
+      zgfdt_yesno: false,
+      regu_yesno: false,
+      wmnw_yesno: false,
+      zuto_yesno: false,
+      opnv_yesno: false,
+      nahe_yesno: false,
+      port_yesno: false,
+      gesch_yesno: false,
+      pfand_yesno: false,
+      emob_yesno: false,
+      lebensmittel: "",
+      stromverbrauch: "",
+      wenigerstrom: "",
+      erneuerbar: "",
+    })
+  }
+
+  const measurements = {
+    tafel_yesno: 'Mitgliedschaft - "Die Tafel"',
+    tgtg_yesno: 'Mitgliedschaft - "too good to go"',
+    zgfdt_yesno: 'Mitgliedschaft - "Zu gut für die Tonne"',
+    regu_yesno: 'Mitgliedschaft - "Restlos glücklich"',
+    wmnw_yesno: 'Mitgliedschaft - "Wirf mich nicht weg"',
+    zuto_yesno: 'Mitgliedschaft - "Zur Tonne"',
+    opnv_yesno: 'Rabatt mit ÖPNV-Ticket',
+    nahe_yesno: 'Regionaler Warenbezug',
+    port_yesno: 'Angebot angemessener Portionen',
+    gesch_yesno: 'Mehrweggeschirr & keine Plastikverpackungen',
+    pfand_yesno: 'Mitgliedschaft bei Pfandsystemen',
+    emob_yesno: 'Verbrennungsfreie Mobilität bei Lieferdienst',
+    lebensmittel: 'Einsparung bei Lebensmittelabfällen [kg]: ',
+    wenigerstrom: 'Einsparung des Stromverbrauchs [%]: ',
+    erneuerbar: 'Anteil Ökostrom [%]: ',
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let resp = await submitForm();
-    let json = await resp.json();
-    if (resp.status === 200) {
-      setResult(json.result);
+
+    let inputErrors = validateForm();
+
+    if (inputErrors.length === 0) {
+      let resp = await submitForm();
+      let json = await resp.json();
+      if (resp.status === 200) {
+        setResult(json.result);
+      }
+    } else {
+      let scrollId = inputErrors[0];
+      let elem = document.getElementById(scrollId + "-label");
+      elem.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" })
     }
   }
 
 
 
   useEffect(() => {
-    console.log(formValues)
-  }, [formValues, selectValue, result]);
+    if (result != null) {
+      document.getElementById("result").scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" })
+    }
+  }, [formValues, selectValue, result, errors]);
 
   return (
     <>
@@ -221,8 +306,9 @@ export default function Home() {
                         } else {
                           return (
                             <>
-                              <label htmlFor={key} style={{ margin: "2em 0 0.5em", fontWeight: "bold" }}>{formCfg[key].text}</label>
+                              <label id={key + "-label"} htmlFor={key} style={{ margin: "2em 0 0.5em", fontWeight: "bold" }}>{formCfg[key].text}</label>
                               <input
+                                id={key}
                                 type={"text"}
                                 name={key}
                                 placeholder={""}
@@ -230,10 +316,13 @@ export default function Home() {
                                   marginRight: "1em",
                                 }}
                                 value={formValues[key]}
-
+                                data-validate={formValues[key].validate}
                                 // ADD ERROR CHECK
                                 onChange={(e) => handleFormChange(key, e)}
                               />
+                              <span id={key + "-error"} style={{ color: "#fd1948", fontWeight: "bold" }}>
+                                {errors[key]}
+                              </span>
                             </>
                           )
                         }
@@ -252,18 +341,48 @@ export default function Home() {
           </form>
           {
             result !== null ? (
-              <div className={styles.resultContainer}>
-                <h3 style={{ margin: "0em 0 1em" }}>Ergebnis:</h3>
-                CO2-Einsparung gesammt:<br /> <h2>{result.savings.toLocaleString(navigator.language, { minimumFractionDigits: 3, maximumFractionDigits: 3 })}  Tonnen pro Jahr</h2>
-                <br /><br />
-                CO2-Einsparung gesammt bezogen auf Mietfläche:<br /> <h2>{result.savings_sqm.toLocaleString(navigator.language, { minimumFractionDigits: 3, maximumFractionDigits: 3 })} Tonnen pro m2 pro Jahr</h2>
+              <div className={styles.resultContainer} id="result">
+                <div style={{}}>
+                  <h3 style={{ margin: "0em 0 1em" }}>Maßnahmen:</h3>
+                  <table style={{ listStyle: "none", marginBottom: "2em" }}>
+                    {
+                      Object.keys(measurements).map((key) => {
+                        if (formValues[key] !== false && formValues[key] !== "") {
+                          return (
+                            <tr>
+                              <td style={{ paddingBottom: "0.75em" }}>
+                                ▸&nbsp;&nbsp;
+                              </td>
+                              <td style={{ paddingBottom: "0.75em" }}>
+                                {measurements[key]}
+                              </td>
+                              {
+                                key.includes("yesno") ? ("") : (
+                                  <><td style={{ paddingBottom: "0.75em", textAlign: "right" }}>{formValues[key].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</td></>
+                                )
+                              }
+
+                            </tr>
+                          )
+                        }
+                      })
+
+                    }
+                  </table>
+                </div>
+                <div>
+                  <h3 style={{ margin: "0em 0 1em" }}>Ergebnis:</h3>
+                  CO2-Einsparung gesammt:<br /> <h2>{result.savings.toLocaleString(navigator.language, { minimumFractionDigits: 3, maximumFractionDigits: 3 })}  Tonnen pro Jahr</h2>
+                  <br /><br />
+                  CO2-Einsparung gesammt bezogen auf Mietfläche:<br /> <h2>{result.savings_sqm.toLocaleString(navigator.language, { minimumFractionDigits: 3, maximumFractionDigits: 3 })} Tonnen pro m2 pro Jahr</h2>
+                </div>
               </div>
             ) : (null)
           }
 
         </div>
 
-      </main>
+      </main >
     </>
   )
 }

@@ -103,11 +103,34 @@
     }
 
     & .resultContainer {
-      width: 66%;
+      display: flex;
+      flex-direction: row;
+      width: 100%;
       margin-top: 2em;
       background: #eef9f6;
       padding: 2em;
+
       // padding-right: 10em;
+      & div {
+        width: 50%;
+
+        & table {
+          padding: 0;
+          border: none;
+          border-collapse: collapse;
+          border-spacing: 0;
+
+          & td {
+            vertical-align: top;
+            width: fit-content;
+          }
+        }
+
+        &:first-of-type {
+          padding-right: 2em;
+        }
+
+      }
     }
   }
 }

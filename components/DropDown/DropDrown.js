@@ -34,18 +34,20 @@ const DropDrown = (props) => {
     const ref = useOutsideClick(handleClickOutside);
 
 
-    const handleStateSetting = (e) => {
-        let value = e.target.dataset.value;
+    const handleStateSetting = (value) => {
+        // let value = e.target.dataset.value;
         console.log("value", value)
         let translator = {
             "gastro": "Gastronomie",
             "office": "Büro"
         }
-        stateSetter({
+        let stateValue = {
             id: value,
             text: translator[value],
-        });
-        console.log(state)
+        }
+        if (state != stateValue) {
+            stateSetter(stateValue);
+        }
         setIsOpen(false);
     }
 
@@ -83,7 +85,7 @@ const DropDrown = (props) => {
                 </button>
 
                 <ul className={`${styles.dropDownMenu} ${isOpen ? (styles.isOpen) : (null)}`} role="menu">
-                    <li className="active" data-value="gastro" onClick={(e) => handleStateSetting(e)}>
+                    <li className="active" data-value="gastro" onClick={(e) => handleStateSetting("gastro")}>
                         <div className={styles.itemContainer}>
                             <a tabindex="-1" role="button">
                                 {

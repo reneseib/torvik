@@ -1,12 +1,15 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 export default async function handler(req, res) {
+
+    console.log("USER IP", req.connection.remoteAddress)
+
     if (req.method === 'POST') {
         var data = req.body;
 
         // process data to types
         try {
-            data["ip_address"] = req.socket.remoteAddress;
+            data["ip_address"] = req.connection.remoteAddress;
             data["mietflaeche"] = parseInt(data["mietflaeche"]);
             data["lebensmittel"] = parseInt(data["lebensmittel"]);
             data["stromverbrauch"] = parseInt(data["stromverbrauch"]);
@@ -25,8 +28,6 @@ export default async function handler(req, res) {
         } catch (e) {
             console.error(e)
         }
-
-        console.log(data);
 
         let resp = await fetch("http://46.101.191.192:8000/gastro", {
             method: 'POST',
