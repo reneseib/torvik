@@ -9,7 +9,7 @@ export default async function handler(req, res) {
 
         // process data to types
         try {
-            data["ip_address"] = req.connection.remoteAddress;
+            data["ip_address"] = req.socket.remoteAddress;
             data["mietflaeche"] = parseInt(data["mietflaeche"]);
             data["lebensmittel"] = parseInt(data["lebensmittel"]);
             data["stromverbrauch"] = parseInt(data["stromverbrauch"]);
@@ -26,10 +26,10 @@ export default async function handler(req, res) {
                 }
             })
         } catch (e) {
-            console.error(e)
+            console.error("ERROR HERE", e)
         }
 
-        let resp = await fetch("http://http://46.101.191.192:8000/gastro", {
+        let resp = await fetch("http://46.101.191.192:8000/gastro", {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
