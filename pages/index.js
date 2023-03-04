@@ -178,50 +178,60 @@ export default function Home() {
   const validateForm = () => {
     let inputErrors = []
 
+    let newErrors = errors;
+
     Object.keys(formValues).map((key) => {
       if (key === "position" && formValues["position"] === "") {
-        errors[key] = "Dieses Feld muss ausgefüllt werden."
+        newErrors[key] = "Dieses Feld muss ausgefüllt werden."
         inputErrors.push(key)
+      } else {
+        newErrors[key] = " "
       }
 
       if (key === "mietflaeche") {
         if (parseInt(formValues["mietflaeche"]) < 1 || Number.isNaN(parseInt(formValues["mietflaeche"]))) {
-          errors["mietflaeche"] = "Dieses Feld muss ausgefüllt werden. Bitte nur Zahlen verwenden"
+          newErrors["mietflaeche"] = "Dieses Feld muss ausgefüllt werden. Bitte nur Zahlen verwenden"
           inputErrors.push(key)
+        } else {
+          newErrors[key] = " "
         }
       }
 
-      if (key === "lebensmittel" && formValues["mietflaeche"] < parseInt(1)) {
-        errors[key] = "Dieses Feld muss ausgefüllt werden."
+      if (key === "stromverbrauch" && formValues["stromverbrauch"] === "") {
+        newErrors[key] = "Dieses Feld muss ausgefüllt werden."
         inputErrors.push(key)
+      } else {
+        newErrors[key] = " "
+      }
+
+      if (key === "wenigerstrom" && formValues["mietflaeche"] !== "") {
+        console.log("key", key, parseInt(formValues["wenigerstrom"]) > 100)
+        if (parseInt(formValues["wenigerstrom"]) < 0 || parseInt(formValues["wenigerstrom"]) > 100 || formValues["wenigerstrom"] === "") {
+          newErrors[key] = "Bitte geben Sie eine Zahl zwischen 0 und 100 ein."
+          inputErrors.push(key)
+        } else {
+          newErrors[key] = " "
+        }
+      }
+
+      if (key === "erneuerbar" && formValues["erneuerbar"] !== "") {
+        if (parseInt(formValues["erneuerbar"]) < 0 || parseInt(formValues["erneuerbar"]) > 100) {
+          newErrors[key] = "Bitte geben Sie eine Zahl zwischen 0 und 100 ein."
+          inputErrors.push(key)
+        } else {
+          newErrors[key] = " "
+        }
       }
     })
+    if (Object.keys(newErrors).length > 0) {
+      setErrors({ ...errors, newErrors })
+    }
 
-    setErrors({ ...errors })
     return inputErrors
   }
 
   const resetForm = () => {
-    setFormValues({
-      position: "",
-      mietflaeche: "",
-      tafel_yesno: false,
-      tgtg_yesno: false,
-      zgfdt_yesno: false,
-      regu_yesno: false,
-      wmnw_yesno: false,
-      zuto_yesno: false,
-      opnv_yesno: false,
-      nahe_yesno: false,
-      port_yesno: false,
-      gesch_yesno: false,
-      pfand_yesno: false,
-      emob_yesno: false,
-      lebensmittel: "",
-      stromverbrauch: "",
-      wenigerstrom: "",
-      erneuerbar: "",
-    })
+    location.reload();
   }
 
   const measurements = {
@@ -341,42 +351,49 @@ export default function Home() {
           </form>
           {
             result !== null ? (
-              <div className={styles.resultContainer} id="result">
-                <div style={{}}>
-                  <h3 style={{ margin: "0em 0 1em" }}>Maßnahmen:</h3>
-                  <table style={{ listStyle: "none", marginBottom: "2em" }}>
-                    {
-                      Object.keys(measurements).map((key) => {
-                        if (formValues[key] !== false && formValues[key] !== "") {
-                          return (
-                            <tr>
-                              <td style={{ paddingBottom: "0.75em" }}>
-                                ▸&nbsp;&nbsp;
-                              </td>
-                              <td style={{ paddingBottom: "0.75em" }}>
-                                {measurements[key]}
-                              </td>
-                              {
-                                key.includes("yesno") ? ("") : (
-                                  <><td style={{ paddingBottom: "0.75em", textAlign: "right" }}>{formValues[key].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</td></>
-                                )
-                              }
+              <>
+                <div className={styles.resultContainer} id="result">
+                  <div style={{}}>
+                    <h3 style={{ margin: "0em 0 1em" }}>Maßnahmen:</h3>
+                    <table style={{ listStyle: "none", marginBottom: "2em" }}>
+                      {
+                        Object.keys(measurements).map((key) => {
+                          if (formValues[key] !== false && formValues[key] !== "") {
+                            return (
+                              <tr>
+                                <td style={{ paddingBottom: "0.75em" }}>
+                                  ▸&nbsp;&nbsp;
+                                </td>
+                                <td style={{ paddingBottom: "0.75em" }}>
+                                  {measurements[key]}
+                                </td>
+                                {
+                                  key.includes("yesno") ? ("") : (
+                                    <><td style={{ paddingBottom: "0.75em", paddingLeft: "0.5em", textAlign: "right" }}>{formValues[key].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</td></>
+                                  )
+                                }
 
-                            </tr>
-                          )
-                        }
-                      })
+                              </tr>
+                            )
+                          }
+                        })
 
-                    }
-                  </table>
+                      }
+                    </table>
+                  </div>
+                  <div>
+                    <h3 style={{ margin: "0em 0 1em" }}>Ergebnis:</h3>
+                    CO2-Einsparung gesammt:<br /> <h2>{result.savings.toLocaleString(navigator.language, { minimumFractionDigits: 3, maximumFractionDigits: 3 })}  Tonnen pro Jahr</h2>
+                    <br /><br />
+                    CO2-Einsparung gesammt bezogen auf Mietfläche:<br /> <h2>{result.savings_sqm.toLocaleString(navigator.language, { minimumFractionDigits: 3, maximumFractionDigits: 3 })} Tonnen pro m2 pro Jahr</h2>
+                  </div>
                 </div>
-                <div>
-                  <h3 style={{ margin: "0em 0 1em" }}>Ergebnis:</h3>
-                  CO2-Einsparung gesammt:<br /> <h2>{result.savings.toLocaleString(navigator.language, { minimumFractionDigits: 3, maximumFractionDigits: 3 })}  Tonnen pro Jahr</h2>
-                  <br /><br />
-                  CO2-Einsparung gesammt bezogen auf Mietfläche:<br /> <h2>{result.savings_sqm.toLocaleString(navigator.language, { minimumFractionDigits: 3, maximumFractionDigits: 3 })} Tonnen pro m2 pro Jahr</h2>
+                <div
+                  className={styles.submit}
+                  id="submit-btn" onClick={(e) => { resetForm() }}>
+                  Neustart
                 </div>
-              </div>
+              </>
             ) : (null)
           }
 

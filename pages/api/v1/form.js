@@ -29,7 +29,7 @@ export default async function handler(req, res) {
             console.error(e)
         }
 
-        let resp = await fetch("http://46.101.191.192:8000/gastro", {
+        let resp = await fetch("http://http://46.101.191.192:8000/gastro", {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
