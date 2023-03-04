@@ -17,7 +17,10 @@ const CheckBox = (props) => {
     }
 
     useEffect(() => {
-        handleFormChange(name, isChecked)
+        let obj = {
+            target: { value: isChecked, name: name }
+        }
+        handleFormChange(obj)
     }, [isChecked]);
 
     return (

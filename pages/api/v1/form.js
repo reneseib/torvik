@@ -7,6 +7,8 @@ export default async function handler(req, res) {
     if (req.method === 'POST') {
         var data = req.body;
 
+        console.log("data", data);
+
         // process data to types
         try {
             data["ip_address"] = req.socket.remoteAddress;
@@ -30,6 +32,7 @@ export default async function handler(req, res) {
         }
 
         let resp = await fetch("http://46.101.191.192:8000/gastro", {
+            // let resp = await fetch("http://127.0.0.1:8000/gastro", {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',

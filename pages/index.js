@@ -146,8 +146,10 @@ export default function Home() {
   const [result, setResult] = useState(null)
 
 
-  const handleFormChange = (name, val) => {
-    var value = val
+  const handleFormChange = (e) => {
+    let name = e.target.name;
+    console.log("name", name);
+    var value = e
     if (typeof value === 'object') {
       value = value?.target?.value;
     }
@@ -328,7 +330,7 @@ export default function Home() {
                                 value={formValues[key]}
                                 data-validate={formValues[key].validate}
                                 // ADD ERROR CHECK
-                                onChange={(e) => handleFormChange(key, e)}
+                                onChange={(e) => handleFormChange(e)}
                               />
                               <span id={key + "-error"} style={{ color: "#fd1948", fontWeight: "bold" }}>
                                 {errors[key]}
