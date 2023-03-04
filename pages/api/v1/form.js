@@ -29,8 +29,6 @@ export default async function handler(req, res) {
             console.error("ERROR HERE", e)
         }
 
-        console.log("data", data);
-
         let resp = await fetch("http://46.101.191.192:8000/gastro", {
             // let resp = await fetch("http://127.0.0.1:8000/gastro", {
             method: 'POST',
@@ -42,8 +40,13 @@ export default async function handler(req, res) {
             },
             body: JSON.stringify(data),
         })
+
+
         let text = await resp.text();
         console.log(text);
+        let result = { "savings": "123", "savings_sqm": "321" }
+
+
         // let result = await resp.json()
 
         res.status(200).json({ status: 'OK', result: result })

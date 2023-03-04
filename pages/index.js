@@ -177,6 +177,11 @@ export default function Home() {
     return resp
   }
 
+  const checkIsDigit = (str) => {
+    if (typeof str != "string") return false
+    return !isNaN(str) && !isNaN(parseInt(str))
+  }
+
   const validateForm = () => {
     let inputErrors = []
 
@@ -184,46 +189,96 @@ export default function Home() {
 
     Object.keys(formValues).map((key) => {
       if (key === "position" && formValues["position"] === "") {
-        newErrors[key] = "Dieses Feld muss ausgefüllt werden."
+        newErrors[key] = "Bitte füllen Sie dieses Feld aus. Bitte nur Zahlen verwenden."
         inputErrors.push(key)
       } else {
         newErrors[key] = " "
       }
 
       if (key === "mietflaeche") {
-        if (parseInt(formValues["mietflaeche"]) < 1 || Number.isNaN(parseInt(formValues["mietflaeche"]))) {
-          newErrors["mietflaeche"] = "Dieses Feld muss ausgefüllt werden. Bitte nur Zahlen verwenden"
-          inputErrors.push(key)
+        newErrors[key] = " ";
+
+        let valIsDigit = checkIsDigit(formValues["mietflaeche"]);
+
+        if (valIsDigit) {
+          if (parseFloat(formValues["mietflaeche"]) < 1) {
+            newErrors["mietflaeche"] = "Bitte füllen Sie dieses Feld aus. Bitte nur Zahlen verwenden."
+            inputErrors.push(key)
+          }
         } else {
-          newErrors[key] = " "
+          newErrors["mietflaeche"] = "Bitte füllen Sie dieses Feld aus. Bitte nur Zahlen verwenden."
+          inputErrors.push(key)
         }
+        console.log("mietflaeche", newErrors["mietflaeche"])
       }
 
-      if (key === "stromverbrauch" && formValues["stromverbrauch"] === "") {
-        newErrors[key] = "Dieses Feld muss ausgefüllt werden."
-        inputErrors.push(key)
-      } else {
+      if (key === "lebensmittel") {
         newErrors[key] = " "
-      }
-
-      if (key === "wenigerstrom" && formValues["mietflaeche"] !== "") {
-        console.log("key", key, parseInt(formValues["wenigerstrom"]) > 100)
-        if (parseInt(formValues["wenigerstrom"]) < 0 || parseInt(formValues["wenigerstrom"]) > 100 || formValues["wenigerstrom"] === "") {
-          newErrors[key] = "Bitte geben Sie eine Zahl zwischen 0 und 100 ein."
+        if (formValues["lebensmittel"] == "") {
+          newErrors[key] = "Bitte füllen Sie dieses Feld aus. Bitte nur Zahlen verwenden."
           inputErrors.push(key)
+        }
+      } else {
+        let valIsDigit = checkIsDigit(formValues["mietflaeche"]);
+
+        if (valIsDigit) {
+          if (parseInt(formValues["lebensmittel"]) < 1) {
+            newErrors[key] = "Bitte füllen Sie dieses Feld aus. Bitte nur Zahlen verwenden."
+          }
         } else {
-          newErrors[key] = " "
+          newErrors[key] = "Bitte füllen Sie dieses Feld aus. Bitte nur Zahlen verwenden."
         }
       }
 
-      if (key === "erneuerbar" && formValues["erneuerbar"] !== "") {
-        if (parseInt(formValues["erneuerbar"]) < 0 || parseInt(formValues["erneuerbar"]) > 100) {
-          newErrors[key] = "Bitte geben Sie eine Zahl zwischen 0 und 100 ein."
+      if (key === "stromverbrauch") {
+        newErrors[key] = " "
+
+        if (formValues["stromverbrauch"] == "") {
+          newErrors[key] = "Bitte füllen Sie dieses Feld aus."
           inputErrors.push(key)
+        }
+
+      } else {
+        let valIsDigit = checkIsDigit(formValues["stromverbrauch"]);
+
+        if (valIsDigit) {
+          if (parseInt(formValues["stromverbrauch"]) < 1) {
+            newErrors[key] = "Bitte füllen Sie dieses Feld aus."
+          }
         } else {
-          newErrors[key] = " "
+          newErrors[key] = "Bitte füllen Sie dieses Feld aus."
         }
       }
+
+
+
+      if (key === "wenigerstrom") {
+        newErrors[key] = " "
+
+        let valIsDigit = checkIsDigit(formValues["wenigerstrom"]);
+
+        if (formValues["wenigerstrom"] !== "" && !valIsDigit) {
+          newErrors[key] = "Bitte geben Sie nur Zahlen zwischen 0 und 100 ein."
+          inputErrors.push(key)
+
+        }
+      }
+
+
+
+      if (key === "erneuerbar") {
+        newErrors[key] = " "
+
+        let valIsDigit = checkIsDigit(formValues["erneuerbar"]);
+
+        if (formValues["erneuerbar"] !== "" && !valIsDigit) {
+          newErrors[key] = "Bitte geben Sie nur Zahlen zwischen 0 und 100 ein."
+          inputErrors.push(key)
+
+        }
+      }
+
+
     })
     if (Object.keys(newErrors).length > 0) {
       setErrors({ ...errors, newErrors })
