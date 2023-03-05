@@ -208,7 +208,6 @@ export default function Home() {
 
         case "lebensmittel":
           if (checkIsText(formValues[key]) && !checkIsDigit(formValues[key]) || checkIsEmpty(formValues[key])) {
-            console.log("Lebensmittel", formValues[key]);
             newErrors[key] = "Bitte Eingabe überprüfen."
             inputErrors.push(key)
           }
@@ -216,7 +215,6 @@ export default function Home() {
 
         case "stromverbrauch":
           if (checkIsText(formValues[key]) && !checkIsDigit(formValues[key]) || checkIsEmpty(formValues[key])) {
-            console.log("Lebensmittel", formValues[key]);
             newErrors[key] = "Bitte Eingabe überprüfen."
             inputErrors.push(key)
           }
@@ -228,9 +226,7 @@ export default function Home() {
               newErrors[key] = "Bitte Eingabe überprüfen."
               inputErrors.push(key)
             } else {
-              console.log("wenigerstrom", formValues[key]);
               if (parseInt(formValues[key]) < 0 || parseInt(formValues[key]) > 100) {
-                console.log("HERE")
                 newErrors[key] = "Bitte eine Zahl zwischen 0 und 100 eingeben."
                 inputErrors.push(key)
               }
@@ -244,9 +240,7 @@ export default function Home() {
               newErrors[key] = "Bitte Eingabe überprüfen."
               inputErrors.push(key)
             } else {
-              console.log("wenigerstrom", formValues[key]);
               if (parseInt(formValues[key]) < 0 || parseInt(formValues[key]) > 100) {
-                console.log("HERE")
                 newErrors[key] = "Bitte eine Zahl zwischen 0 und 100 eingeben."
                 inputErrors.push(key)
               }
@@ -256,59 +250,13 @@ export default function Home() {
       }
     })
 
-    // Object.keys(formValues).map((key) => {
-    //   if (key === "stromverbrauch") {
-    //     newErrors[key] = "";
-
-    //     if (formValues["stromverbrauch"] == "") {
-    //       newErrors[key] = "Bitte füllen Sie dieses Feld aus."
-    //       inputErrors.push(key)
-    //     } else {
-    //       let valIsDigit = checkIsDigit(formValues["stromverbrauch"]);
-
-    //       if (valIsDigit) {
-    //         if (parseInt(formValues["stromverbrauch"]) < 1) {
-    //           newErrors[key] = "Bitte füllen Sie dieses Feld aus."
-    //         }
-    //       } else {
-    //         newErrors[key] = "Bitte füllen Sie dieses Feld aus."
-    //       }
-    //     }
-    //   }
-
-    //   if (key === "wenigerstrom") {
-    //     newErrors[key] = "";
-
-    //     let valIsDigit = checkIsDigit(formValues["wenigerstrom"]);
-
-    //     if (formValues["wenigerstrom"] !== "" && !valIsDigit) {
-    //       newErrors[key] = "Bitte geben Sie nur Zahlen zwischen 0 und 100 ein."
-    //       inputErrors.push(key)
-
-    //     }
-    //   }
-
-    //   if (key === "erneuerbar") {
-    //     newErrors[key] = "";
-
-    //     let valIsDigit = checkIsDigit(formValues["erneuerbar"]);
-
-    //     if (formValues["erneuerbar"] !== "" && !valIsDigit) {
-    //       newErrors[key] = "Bitte geben Sie nur Zahlen zwischen 0 und 100 ein."
-    //       inputErrors.push(key)
-    //     }
-    //   }
-    // })
 
     if (inputErrors.length > 0) {
-      console.log("newErrors", newErrors);
       setErrors({ ...newErrors })
       return inputErrors
     } else {
       setErrors({})
     }
-
-    console.log("input eRrors", inputErrors);
 
     return []
   }
@@ -340,8 +288,6 @@ export default function Home() {
 
     let inputErrors = validateForm();
 
-    console.log("LEN", inputErrors.length);
-
     if (inputErrors.length === 0) {
       let resp = await submitForm();
 
@@ -363,7 +309,6 @@ export default function Home() {
   }, [formValues, selectValue, result]);
 
   useEffect(() => {
-    console.log("errors eeffect", errors);
   }, [errors]);
 
   useEffect(() => {
