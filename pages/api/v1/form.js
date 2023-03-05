@@ -41,13 +41,7 @@ export default async function handler(req, res) {
             body: JSON.stringify(data),
         })
 
-
-        let text = await resp.text();
-        console.log(text);
-        let result = { "savings": "123", "savings_sqm": "321" }
-
-
-        // let result = await resp.json()
+        let result = await resp.json()
 
         res.status(200).json({ status: 'OK', result: result })
     } else {

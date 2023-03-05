@@ -111,14 +111,7 @@ export default function Home() {
     },
   }
 
-  const [errors, setErrors] = useState({
-    position: "",
-    mietflaeche: "",
-    lebensmittel: "",
-    stromverbrauch: "",
-    wenigerstrom: "",
-    erneuerbar: "",
-  })
+  const [errors, setErrors] = useState({})
   const [selectValue, setSelectValue] = useState("")
   const [formValues, setFormValues] = useState(
     {
@@ -148,7 +141,7 @@ export default function Home() {
 
   const handleFormChange = (e) => {
     let name = e.target.name;
-    console.log("name", name);
+
     var value = e
     if (typeof value === 'object') {
       value = value?.target?.value;
@@ -185,18 +178,21 @@ export default function Home() {
   const validateForm = () => {
     let inputErrors = []
 
-    let newErrors = errors;
+    let newErrors = {};
+
+    // Object.keys(formValues).forEach(key => {
+    //   switch (key) {
+    //     case "position":
+    //       if (formValues[key] === "") {
+    //         newErrors[key] = "Bitte füllen Sie dieses Feld aus. Bitte nur Zahlen verwenden."
+    //         inputErrors.push(key)
+    //       }
+    //   }
+    // })
 
     Object.keys(formValues).map((key) => {
-      if (key === "position" && formValues["position"] === "") {
-        newErrors[key] = "Bitte füllen Sie dieses Feld aus. Bitte nur Zahlen verwenden."
-        inputErrors.push(key)
-      } else {
-        newErrors[key] = " "
-      }
-
       if (key === "mietflaeche") {
-        newErrors[key] = " ";
+        newErrors[key] = "";
 
         let valIsDigit = checkIsDigit(formValues["mietflaeche"]);
 
@@ -209,51 +205,52 @@ export default function Home() {
           newErrors["mietflaeche"] = "Bitte füllen Sie dieses Feld aus. Bitte nur Zahlen verwenden."
           inputErrors.push(key)
         }
-        console.log("mietflaeche", newErrors["mietflaeche"])
       }
 
       if (key === "lebensmittel") {
-        newErrors[key] = " "
+        newErrors[key] = "";
         if (formValues["lebensmittel"] == "") {
           newErrors[key] = "Bitte füllen Sie dieses Feld aus. Bitte nur Zahlen verwenden."
           inputErrors.push(key)
-        }
-      } else {
-        let valIsDigit = checkIsDigit(formValues["mietflaeche"]);
+        } else {
+          let valIsDigit = checkIsDigit(formValues["mietflaeche"]);
 
-        if (valIsDigit) {
-          if (parseInt(formValues["lebensmittel"]) < 1) {
+          if (valIsDigit) {
+            if (parseInt(formValues["lebensmittel"]) < 1) {
+              newErrors[key] = "Bitte füllen Sie dieses Feld aus. Bitte nur Zahlen verwenden."
+            }
+          } else {
             newErrors[key] = "Bitte füllen Sie dieses Feld aus. Bitte nur Zahlen verwenden."
           }
-        } else {
-          newErrors[key] = "Bitte füllen Sie dieses Feld aus. Bitte nur Zahlen verwenden."
         }
       }
 
+
       if (key === "stromverbrauch") {
-        newErrors[key] = " "
+        newErrors[key] = "";
 
         if (formValues["stromverbrauch"] == "") {
           newErrors[key] = "Bitte füllen Sie dieses Feld aus."
           inputErrors.push(key)
-        }
+        } else {
+          let valIsDigit = checkIsDigit(formValues["stromverbrauch"]);
 
-      } else {
-        let valIsDigit = checkIsDigit(formValues["stromverbrauch"]);
-
-        if (valIsDigit) {
-          if (parseInt(formValues["stromverbrauch"]) < 1) {
+          if (valIsDigit) {
+            if (parseInt(formValues["stromverbrauch"]) < 1) {
+              newErrors[key] = "Bitte füllen Sie dieses Feld aus."
+            }
+          } else {
             newErrors[key] = "Bitte füllen Sie dieses Feld aus."
           }
-        } else {
-          newErrors[key] = "Bitte füllen Sie dieses Feld aus."
         }
       }
 
 
 
+
+
       if (key === "wenigerstrom") {
-        newErrors[key] = " "
+        newErrors[key] = "";
 
         let valIsDigit = checkIsDigit(formValues["wenigerstrom"]);
 
@@ -264,24 +261,20 @@ export default function Home() {
         }
       }
 
-
-
       if (key === "erneuerbar") {
-        newErrors[key] = " "
+        newErrors[key] = "";
 
         let valIsDigit = checkIsDigit(formValues["erneuerbar"]);
 
         if (formValues["erneuerbar"] !== "" && !valIsDigit) {
           newErrors[key] = "Bitte geben Sie nur Zahlen zwischen 0 und 100 ein."
           inputErrors.push(key)
-
         }
       }
-
-
     })
+
     if (Object.keys(newErrors).length > 0) {
-      setErrors({ ...errors, newErrors })
+      setErrors({ ...newErrors })
     }
 
     return inputErrors
@@ -316,6 +309,7 @@ export default function Home() {
 
     if (inputErrors.length === 0) {
       let resp = await submitForm();
+
       let json = await resp.json();
       if (resp.status === 200) {
         setResult(json.result);
@@ -333,7 +327,10 @@ export default function Home() {
     if (result != null) {
       document.getElementById("result").scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" })
     }
-  }, [formValues, selectValue, result, errors]);
+  }, [formValues, selectValue, result]);
+
+  useEffect(() => {
+  }, [errors]);
 
   return (
     <>
@@ -388,7 +385,7 @@ export default function Home() {
                                 onChange={(e) => handleFormChange(e)}
                               />
                               <span id={key + "-error"} style={{ color: "#fd1948", fontWeight: "bold" }}>
-                                {errors[key]}
+                                {errors[key] !== undefined ? (errors[key]) : ("")}
                               </span>
                             </>
                           )
