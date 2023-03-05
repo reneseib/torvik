@@ -110,6 +110,7 @@ export default function Home() {
       limit: "digits",
     },
   }
+
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState({})
   const [selectValue, setSelectValue] = useState("")
@@ -290,9 +291,9 @@ export default function Home() {
 
     if (inputErrors.length === 0) {
       let resp = await submitForm();
+      setLoading(true);
 
       let json = await resp.json();
-      setLoading(true);
       if (resp.status === 200) {
         setLoading(false);
         setResult(json.result);
@@ -394,8 +395,10 @@ export default function Home() {
           </form>
           {
             loading === true ? (
-              <div>
-                Loading...
+              <div style={{ width: "100%" }}>
+                <div className={styles.resultContainer} id="result">
+                  Loading...
+                </div>
               </div>
             ) : ("")
           }
