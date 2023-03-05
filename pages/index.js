@@ -305,7 +305,11 @@ export default function Home() {
     }
   }
 
-  useEffect(() => { }, [loading]);
+  useEffect(() => {
+    if (loading != false) {
+      document.getElementById("result").scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" })
+    }
+  }, [loading]);
 
   useEffect(() => {
 
@@ -394,7 +398,7 @@ export default function Home() {
 
           </form>
           {
-            loading === true ? (
+            loading !== false ? (
               <div style={{ width: "100%" }}>
                 <div className={styles.resultContainer} id="result">
                   <h3>Loading...</h3>
