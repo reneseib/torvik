@@ -110,7 +110,7 @@ export default function Home() {
       limit: "digits",
     },
   }
-
+  const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState({})
   const [selectValue, setSelectValue] = useState("")
   const [formValues, setFormValues] = useState(
