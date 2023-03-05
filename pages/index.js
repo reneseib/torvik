@@ -305,7 +305,7 @@ export default function Home() {
     }
   }
 
-
+  useEffect(() => { }, [loading]);
 
   useEffect(() => {
 
@@ -397,7 +397,7 @@ export default function Home() {
             loading === true ? (
               <div style={{ width: "100%" }}>
                 <div className={styles.resultContainer} id="result">
-                  Loading...
+                  <h3>Loading...</h3>
                 </div>
               </div>
             ) : ("")
