@@ -405,49 +405,52 @@ export default function Home() {
           </form>
           {
             result !== null ? (
-              <>
+              <div style={{ width: "100%" }}>
                 <div className={styles.resultContainer} id="result">
-                  <div style={{}}>
-                    <h3 style={{ margin: "0em 0 1em" }}>Maßnahmen:</h3>
-                    <table style={{ listStyle: "none", marginBottom: "2em" }}>
-                      {
-                        Object.keys(measurements).map((key) => {
-                          if (formValues[key] !== false && formValues[key] !== "") {
-                            return (
-                              <tr>
-                                <td style={{ paddingBottom: "0.75em" }}>
-                                  ▸&nbsp;&nbsp;
-                                </td>
-                                <td style={{ paddingBottom: "0.75em" }}>
-                                  {measurements[key]}
-                                </td>
-                                {
-                                  key.includes("yesno") ? ("") : (
-                                    <><td style={{ paddingBottom: "0.75em", paddingLeft: "0.5em", textAlign: "right" }}>{formValues[key].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</td></>
-                                  )
-                                }
+                  <div style={{ display: "flex", flexDirection: "row", widht: "100%" }}>
+                    <div style={{ width: "100%" }}>
+                      <h3 style={{ margin: "0em 0 1em" }}>Maßnahmen:</h3>
+                      <table style={{ listStyle: "none", marginBottom: "2em" }}>
+                        {
+                          Object.keys(measurements).map((key) => {
+                            if (formValues[key] !== false && formValues[key] !== "") {
+                              return (
+                                <tr>
+                                  <td style={{ paddingBottom: "0.75em" }}>
+                                    ▸&nbsp;&nbsp;
+                                  </td>
+                                  <td style={{ paddingBottom: "0.75em" }}>
+                                    {measurements[key]}
+                                  </td>
+                                  {
+                                    key.includes("yesno") ? ("") : (
+                                      <><td style={{ paddingBottom: "0.75em", paddingLeft: "0.5em", textAlign: "right" }}>{formValues[key].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</td></>
+                                    )
+                                  }
 
-                              </tr>
-                            )
-                          }
-                        })
+                                </tr>
+                              )
+                            }
+                          })
 
-                      }
-                    </table>
+                        }
+                      </table>
+                    </div>
+                    <div style={{ width: "100%" }}>
+                      <h3 style={{ margin: "0em 0 1em" }}>Ergebnis:</h3>
+                      CO2-Einsparung gesammt:<br /> <h2>{result.savings.toLocaleString(navigator.language, { minimumFractionDigits: 3, maximumFractionDigits: 3 })}  Tonnen pro Jahr</h2>
+                      <br /><br />
+                      CO2-Einsparung gesammt bezogen auf Mietfläche:<br /> <h2>{result.savings_sqm.toLocaleString(navigator.language, { minimumFractionDigits: 3, maximumFractionDigits: 3 })} Tonnen pro m2 pro Jahr</h2>
+                    </div>
                   </div>
-                  <div>
-                    <h3 style={{ margin: "0em 0 1em" }}>Ergebnis:</h3>
-                    CO2-Einsparung gesammt:<br /> <h2>{result.savings.toLocaleString(navigator.language, { minimumFractionDigits: 3, maximumFractionDigits: 3 })}  Tonnen pro Jahr</h2>
-                    <br /><br />
-                    CO2-Einsparung gesammt bezogen auf Mietfläche:<br /> <h2>{result.savings_sqm.toLocaleString(navigator.language, { minimumFractionDigits: 3, maximumFractionDigits: 3 })} Tonnen pro m2 pro Jahr</h2>
+                  <div
+                    className={styles.submit}
+                    id="submit-btn" onClick={(e) => { resetForm() }}>
+                    Neustart
                   </div>
                 </div>
-                <div
-                  className={styles.submit}
-                  id="submit-btn" onClick={(e) => { resetForm() }}>
-                  Neustart
-                </div>
-              </>
+
+              </div>
             ) : (null)
           }
 

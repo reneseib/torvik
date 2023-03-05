@@ -13,6 +13,7 @@
   }
 
   .submit {
+    cursor: pointer;
     padding: 0.5em;
     background: #02734A;
     color: white;
@@ -20,6 +21,10 @@
     border-radius: 4px;
     margin-top: 1.5em;
     font-weight: bold;
+
+    &:hover {
+      background: rgba(#02734A, 0.93);
+    }
   }
 
   .container {
@@ -103,16 +108,15 @@
     }
 
     & .resultContainer {
+      margin-left: -2em;
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       width: 100%;
       margin-top: 2em;
       background: #eef9f6;
       padding: 2em;
 
-      // padding-right: 10em;
       & div {
-        width: 50%;
 
         & table {
           padding: 0;
