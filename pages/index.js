@@ -292,7 +292,9 @@ export default function Home() {
       let resp = await submitForm();
 
       let json = await resp.json();
+      setLoading(true);
       if (resp.status === 200) {
+        setLoading(false);
         setResult(json.result);
       }
     } else {
@@ -390,6 +392,13 @@ export default function Home() {
             </div>
 
           </form>
+          {
+            loading === true ? (
+              <div>
+                Loading...
+              </div>
+            ) : ("")
+          }
           {
             result !== null ? (
               <div style={{ width: "100%" }}>
