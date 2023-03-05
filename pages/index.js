@@ -12,13 +12,13 @@ export default function Home() {
 
   const formCfg = {
     position: {
-      text: "Was ist Ihre Jobbezeichnung?",
+      text: "Was ist Ihre Jobbezeichnung? *",
       id: "position",
       type: "input",
       validate: ["not-empty"]
     },
     mietflaeche: {
-      text: "Wieviel qm hat die Mietfläche Ihres Mieters?",
+      text: "Wieviel qm hat die Mietfläche Ihres Mieters? *",
       id: "mietflaeche",
       type: "input",
       limit: "digits",
@@ -85,14 +85,14 @@ export default function Home() {
       type: "switch",
     },
     lebensmittel: {
-      text: 'Wieviel kg Lebensmittelabfälle wird Ihr Mieter im Monat insgesamt vermeiden?',
+      text: 'Wieviel kg Lebensmittelabfälle wird Ihr Mieter im Monat insgesamt vermeiden? *',
       id: "lebensmittel",
       type: "switch-input",
       limit: "digits",
       validate: ["is-digit", "not-empty", "gt-zero"]
     },
     stromverbrauch: {
-      text: 'Wieviel Strom in kWh verbraucht Ihr Mieter bisher im Monat im Mittel?',
+      text: 'Wieviel Strom in kWh verbraucht Ihr Mieter bisher im Monat im Mittel? *',
       id: "stromverbrauch",
       type: "input",
       limit: "digits",
@@ -175,109 +175,142 @@ export default function Home() {
     return !isNaN(str) && !isNaN(parseInt(str))
   }
 
+  const checkIsText = (str) => {
+    if (typeof str != "string") return false
+    return isNaN(str) && isNaN(parseInt(str))
+  }
+
+  const checkIsEmpty = (str) => {
+    if (str === "") return true
+    return false
+  }
+
   const validateForm = () => {
     let inputErrors = []
 
     let newErrors = {};
 
-    // Object.keys(formValues).forEach(key => {
-    //   switch (key) {
-    //     case "position":
-    //       if (formValues[key] === "") {
-    //         newErrors[key] = "Bitte füllen Sie dieses Feld aus. Bitte nur Zahlen verwenden."
-    //         inputErrors.push(key)
-    //       }
-    //   }
-    // })
-
-    Object.keys(formValues).map((key) => {
-      if (key === "mietflaeche") {
-        newErrors[key] = "";
-
-        let valIsDigit = checkIsDigit(formValues["mietflaeche"]);
-
-        if (valIsDigit) {
-          if (parseFloat(formValues["mietflaeche"]) < 1) {
-            newErrors["mietflaeche"] = "Bitte füllen Sie dieses Feld aus. Bitte nur Zahlen verwenden."
+    Object.keys(formValues).forEach(key => {
+      switch (key) {
+        case "position":
+          if (!checkIsText(formValues[key]) && checkIsDigit(formValues[key]) || checkIsEmpty(formValues[key])) {
+            newErrors[key] = "Bitte Eingabe überprüfen."
             inputErrors.push(key)
           }
-        } else {
-          newErrors["mietflaeche"] = "Bitte füllen Sie dieses Feld aus. Bitte nur Zahlen verwenden."
-          inputErrors.push(key)
-        }
-      }
+          break;
 
-      if (key === "lebensmittel") {
-        newErrors[key] = "";
-        if (formValues["lebensmittel"] == "") {
-          newErrors[key] = "Bitte füllen Sie dieses Feld aus. Bitte nur Zahlen verwenden."
-          inputErrors.push(key)
-        } else {
-          let valIsDigit = checkIsDigit(formValues["mietflaeche"]);
-
-          if (valIsDigit) {
-            if (parseInt(formValues["lebensmittel"]) < 1) {
-              newErrors[key] = "Bitte füllen Sie dieses Feld aus. Bitte nur Zahlen verwenden."
-            }
-          } else {
-            newErrors[key] = "Bitte füllen Sie dieses Feld aus. Bitte nur Zahlen verwenden."
+        case "mietflaeche":
+          if (checkIsText(formValues[key]) && !checkIsDigit(formValues[key]) || checkIsEmpty(formValues[key])) {
+            newErrors[key] = "Bitte Eingabe überprüfen."
+            inputErrors.push(key)
           }
-        }
-      }
+          break;
 
-
-      if (key === "stromverbrauch") {
-        newErrors[key] = "";
-
-        if (formValues["stromverbrauch"] == "") {
-          newErrors[key] = "Bitte füllen Sie dieses Feld aus."
-          inputErrors.push(key)
-        } else {
-          let valIsDigit = checkIsDigit(formValues["stromverbrauch"]);
-
-          if (valIsDigit) {
-            if (parseInt(formValues["stromverbrauch"]) < 1) {
-              newErrors[key] = "Bitte füllen Sie dieses Feld aus."
-            }
-          } else {
-            newErrors[key] = "Bitte füllen Sie dieses Feld aus."
+        case "lebensmittel":
+          if (checkIsText(formValues[key]) && !checkIsDigit(formValues[key]) || checkIsEmpty(formValues[key])) {
+            console.log("Lebensmittel", formValues[key]);
+            newErrors[key] = "Bitte Eingabe überprüfen."
+            inputErrors.push(key)
           }
-        }
-      }
+          break;
 
+        case "stromverbrauch":
+          if (checkIsText(formValues[key]) && !checkIsDigit(formValues[key]) || checkIsEmpty(formValues[key])) {
+            console.log("Lebensmittel", formValues[key]);
+            newErrors[key] = "Bitte Eingabe überprüfen."
+            inputErrors.push(key)
+          }
+          break;
 
+        case "wenigerstrom":
+          if (!checkIsEmpty(formValues[key])) {
+            if (!checkIsDigit(formValues[key])) {
+              newErrors[key] = "Bitte Eingabe überprüfen."
+              inputErrors.push(key)
+            } else {
+              console.log("wenigerstrom", formValues[key]);
+              if (parseInt(formValues[key]) < 0 || parseInt(formValues[key]) > 100) {
+                console.log("HERE")
+                newErrors[key] = "Bitte eine Zahl zwischen 0 und 100 eingeben."
+                inputErrors.push(key)
+              }
+            }
+          }
+          break;
 
-
-
-      if (key === "wenigerstrom") {
-        newErrors[key] = "";
-
-        let valIsDigit = checkIsDigit(formValues["wenigerstrom"]);
-
-        if (formValues["wenigerstrom"] !== "" && !valIsDigit) {
-          newErrors[key] = "Bitte geben Sie nur Zahlen zwischen 0 und 100 ein."
-          inputErrors.push(key)
-
-        }
-      }
-
-      if (key === "erneuerbar") {
-        newErrors[key] = "";
-
-        let valIsDigit = checkIsDigit(formValues["erneuerbar"]);
-
-        if (formValues["erneuerbar"] !== "" && !valIsDigit) {
-          newErrors[key] = "Bitte geben Sie nur Zahlen zwischen 0 und 100 ein."
-          inputErrors.push(key)
-        }
+        case "erneuerbar":
+          if (!checkIsEmpty(formValues[key])) {
+            if (!checkIsDigit(formValues[key])) {
+              newErrors[key] = "Bitte Eingabe überprüfen."
+              inputErrors.push(key)
+            } else {
+              console.log("wenigerstrom", formValues[key]);
+              if (parseInt(formValues[key]) < 0 || parseInt(formValues[key]) > 100) {
+                console.log("HERE")
+                newErrors[key] = "Bitte eine Zahl zwischen 0 und 100 eingeben."
+                inputErrors.push(key)
+              }
+            }
+          }
+          break;
       }
     })
 
-    if (Object.keys(newErrors).length > 0) {
+    // Object.keys(formValues).map((key) => {
+    //   if (key === "stromverbrauch") {
+    //     newErrors[key] = "";
+
+    //     if (formValues["stromverbrauch"] == "") {
+    //       newErrors[key] = "Bitte füllen Sie dieses Feld aus."
+    //       inputErrors.push(key)
+    //     } else {
+    //       let valIsDigit = checkIsDigit(formValues["stromverbrauch"]);
+
+    //       if (valIsDigit) {
+    //         if (parseInt(formValues["stromverbrauch"]) < 1) {
+    //           newErrors[key] = "Bitte füllen Sie dieses Feld aus."
+    //         }
+    //       } else {
+    //         newErrors[key] = "Bitte füllen Sie dieses Feld aus."
+    //       }
+    //     }
+    //   }
+
+    //   if (key === "wenigerstrom") {
+    //     newErrors[key] = "";
+
+    //     let valIsDigit = checkIsDigit(formValues["wenigerstrom"]);
+
+    //     if (formValues["wenigerstrom"] !== "" && !valIsDigit) {
+    //       newErrors[key] = "Bitte geben Sie nur Zahlen zwischen 0 und 100 ein."
+    //       inputErrors.push(key)
+
+    //     }
+    //   }
+
+    //   if (key === "erneuerbar") {
+    //     newErrors[key] = "";
+
+    //     let valIsDigit = checkIsDigit(formValues["erneuerbar"]);
+
+    //     if (formValues["erneuerbar"] !== "" && !valIsDigit) {
+    //       newErrors[key] = "Bitte geben Sie nur Zahlen zwischen 0 und 100 ein."
+    //       inputErrors.push(key)
+    //     }
+    //   }
+    // })
+
+    if (inputErrors.length > 0) {
+      console.log("newErrors", newErrors);
       setErrors({ ...newErrors })
+      return inputErrors
+    } else {
+      setErrors({})
     }
 
-    return inputErrors
+    console.log("input eRrors", inputErrors);
+
+    return []
   }
 
   const resetForm = () => {
@@ -307,6 +340,8 @@ export default function Home() {
 
     let inputErrors = validateForm();
 
+    console.log("LEN", inputErrors.length);
+
     if (inputErrors.length === 0) {
       let resp = await submitForm();
 
@@ -324,13 +359,20 @@ export default function Home() {
 
 
   useEffect(() => {
-    if (result != null) {
-      document.getElementById("result").scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" })
-    }
+
   }, [formValues, selectValue, result]);
 
   useEffect(() => {
+    console.log("errors eeffect", errors);
   }, [errors]);
+
+  useEffect(() => {
+    if (result != null) {
+      document.getElementById("result").scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" })
+    }
+  }, [result]);
+
+
 
   return (
     <>
