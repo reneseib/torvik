@@ -29,17 +29,23 @@
             justify-content: flex-end;
             height: 100%;
             flex-grow: 1;
+            max-width: 100%;
+            overflow-x: scroll;
+
 
             & ul {
                 display: flex;
                 flex-direction: row;
                 list-style-type: none;
+                overflow-x: scroll;
+
             }
 
             & .navItem {
                 padding: 2em 1.5em;
                 cursor: pointer;
                 height: 100%;
+                white-space: nowrap;
 
                 &:hover {
                     color: #02734A;
