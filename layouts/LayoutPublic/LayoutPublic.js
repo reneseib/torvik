@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 import styles from './styles.module.scss';
 
@@ -8,6 +9,7 @@ const LayoutPublic = ({ children }) => {
         <div className={styles.layoutPublicWrapper}>
             <Header />
             {children}
+            <Footer />
         </div>
     );
 };

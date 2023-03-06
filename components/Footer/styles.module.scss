@@ -1,0 +1,20 @@
+.container {
+    width: 100%;
+    padding: 3em 0;
+    background: #f3f2f1;
+    display: flex;
+    justify-content: center;
+
+    & .footerContainer {
+        width: 66%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        & .footerContainer {
+            width: 100%;
+            padding: 3em 2em;
+        }
+    }
+}
