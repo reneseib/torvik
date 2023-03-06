@@ -3,14 +3,12 @@ import { NextRequest } from 'next/server'
 
 export default async function handler(req, res) {
 
-    console.log("USER IP", req.headers["x-real-ip"])
-
     if (req.method === 'POST') {
         var data = req.body;
 
         // process data to types
         try {
-            data["ip_address"] = req.socket.remoteAddress;
+            data["ip_address"] = req.headers["x-real-ip"];
             data["mietflaeche"] = parseInt(data["mietflaeche"]);
             data["lebensmittel"] = parseInt(data["lebensmittel"]);
             data["stromverbrauch"] = parseInt(data["stromverbrauch"]);
