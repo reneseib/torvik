@@ -12,22 +12,24 @@ const Header = () => {
                 <div className={styles.navWrapper}>
                     <ul>
                         {/* <li className={styles.navItem}>Mission</li>*/}
-                        <li className={styles.navItem}>
-                            <Link href={"/"}>
-                                CO<sub>2</sub> Kalkulator
-                            </Link>
-                        </li>
+                        <Link href={"/"}>
+                            <li className={styles.navItem}>
 
-                        <li className={styles.navItem}>
-                            <Link href={"mission"}>
+                                CO<sub>2</sub> Kalkulator
+
+                            </li>
+                        </Link>
+
+                        <Link href={"mission"}>
+                            <li className={styles.navItem}>
                                 Mission
-                            </Link>
-                        </li>
-                        <li className={styles.navItem}>
-                            <Link href={"https://torvikgruen.de"}>
+                            </li>
+                        </Link>
+                        <Link href={"https://torvikgruen.de"}>
+                            <li className={styles.navItem}>
                                 Home
-                            </Link>
-                        </li>
+                            </li>
+                        </Link>
                     </ul>
                 </div>
                 {/* <div className={styles.navIcons}>
