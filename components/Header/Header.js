@@ -11,9 +11,18 @@ const Header = () => {
                 </div>
                 <div className={styles.navWrapper}>
                     <ul>
-                        {/* <li className={styles.navItem}>Mission</li>
-                        <li className={styles.navItem}>CO<sub>2</sub> Kalkulator</li>
-                        <li className={styles.navItem}>Über uns</li> */}
+                        {/* <li className={styles.navItem}>Mission</li>*/}
+                        <li className={styles.navItem}>
+                            <Link href={"/"}>
+                                CO<sub>2</sub> Kalkulator
+                            </Link>
+                        </li>
+
+                        <li className={styles.navItem}>
+                            <Link href={"mission"}>
+                                Mission
+                            </Link>
+                        </li>
                         <li className={styles.navItem}>
                             <Link href={"https://torvikgruen.de"}>
                                 Home

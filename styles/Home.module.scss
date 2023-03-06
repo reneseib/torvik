@@ -28,7 +28,7 @@
   }
 
   .container {
-    width: 66.67%;
+    width: 66%;
     height: auto;
 
     & .extendableContainer {
@@ -139,8 +139,78 @@
   }
 }
 
+.missionText {
+  width: 50%;
+
+  p {
+    font-size: 1.0em;
+    line-height: 1.75em;
+    margin-bottom: 1.5em;
+    color: #061621;
+  }
+}
+
+.containerWrapper {
+  display: flex;
+  flex-direction: row;
+  width: 66%;
+  height: 100vh;
+
+  & .imageContainer {
+    width: 50%;
+    min-height: 100vh;
+    height: 100%;
+    padding-top: 3em;
+
+    & .imageWrapper {
+      position: relative;
+      width: 100%;
+      height: 50%;
+    }
+  }
+
+
+  &>div {
+    display: flex;
+    flex-direction: column;
+
+    &:first-of-type {
+      order: 1;
+
+    }
+
+    &:last-of-type {
+      order: 2;
+    }
+  }
+}
+
 
 @media screen and (max-width: 768px) {
+
+  .containerWrapper {
+    width: 100%;
+    flex-direction: column;
+
+    & .imageContainer {
+      width: 100%;
+
+      & .imageWrapper {
+        position: relative;
+        width: 100%;
+        height: 50%;
+      }
+    }
+
+    &>div:first-of-type {
+      order: 2;
+    }
+
+    &>div:last-of-type {
+      order: 1;
+    }
+  }
+
   .main {
     .container {
       width: 100%;
